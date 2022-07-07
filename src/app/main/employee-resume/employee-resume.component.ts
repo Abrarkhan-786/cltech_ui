@@ -434,7 +434,7 @@ export class EmployeeResumeComponent implements OnInit {
                      this.resumeForm.value.socialMediaLink:null;
     socialLink?.forEach((link:any)=>{
       socialMediaLink.gitHub=link.gitHub;
-      socialMediaLink.lindIn=link.lindIn;
+      socialMediaLink.lindIn=link.linkdin;
       socialMediaLink.stackOverflow=link.stackOverflow;
       employee.socialMediaLinks=socialMediaLink;
     })
