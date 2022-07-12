@@ -11,8 +11,8 @@ export class EmployeeResume{
  hobbies!:string|null|undefined;;
  accomplishments!:string|null|undefined;;
  socialMediaLinks!:SocialMediaLink;
- fresher!:boolean|null |undefined;
- working!:boolean|null |undefined
+ isFresher!:boolean|null |undefined;
+ isWorking!:boolean|null |undefined
  currentCTC:number |null |undefined;
  expectedCTC!:number |null |undefined;
  preferedLocation!:string |null |undefined; 
@@ -50,7 +50,7 @@ export class EmployeeDetail{
     alternateEmail!: string | null;
     phone!: string | null | undefined;
     alternatePhone!: string | null |undefined;
-    DOB!: Date|null
+    dob!: Date|null
     addreses: Array<Address>=[];
     fkEmployeeId!: number |null;
     constructor(){}
@@ -63,7 +63,7 @@ export class EmployeeDetail{
     jobDescription!: string;
     startDate!: Date |null;
     endDate!: Date |null;
-    currentlyWrking!:boolean
+    isCurrentlyWorking!:boolean
     fkEmployeeId!: number;
     constructor(){}
 }
@@ -94,16 +94,16 @@ export class Language{
     languageId!: number;
     languageName!: string;
     proficient!: string;
-    read!: boolean;
-    speak!: boolean;
-    write!: boolean;
+    isRead!: boolean;
+    isSpeak!: boolean;
+    isWrite!: boolean;
     fkEmployeeId!: number;
     constructor(){}
 }
 export class SocialMediaLink{
     socialMediaLinkId!: number;
     gitHub!: string;
-    lindIn!: string;
+    linkedIn!: string;
     stackOverflow!: string;
     fkEmployeeId!: number;
     constructor(){}

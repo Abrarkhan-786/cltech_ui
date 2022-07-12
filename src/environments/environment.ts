@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  BACKEND_URL:'http://localhost:8280/springbootMysqlCrud/'
+  BACKEND_URL:'http://localhost:8082/cltech/'
 
 
 };

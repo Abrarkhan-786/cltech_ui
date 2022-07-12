@@ -19,13 +19,17 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MomentDateModule } from '@angular/material-moment-adapter';
+import { EmployeeTableComponent } from './employee-table/employee-table.component';
+import { DataTablesModule } from "angular-datatables";
+import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
 const routes: Routes = [
   { path: '', component: EmployeeResumeComponent },
+  {path:'employees',component:EmployeeTableComponent}
 ];
 
 
 @NgModule({
-  declarations: [EmployeeResumeComponent],
+  declarations: [EmployeeResumeComponent, EmployeeTableComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
@@ -46,7 +50,9 @@ const routes: Routes = [
     MatButtonToggleModule,
     MatFormFieldModule,
     MatCheckboxModule,
-    MomentDateModule
+    MomentDateModule,
+    DataTablesModule,
+    jqxGridModule
   ]
 })
 export class EmployeeResumeModule { }

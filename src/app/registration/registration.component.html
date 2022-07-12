@@ -1,0 +1,49 @@
+<div  class="form" style=" width: 30vw; height:75vh;padding:1rem;background: #fff; display: flex; justify-content: center; margin:1rem auto;">
+  <div class="d-flex justify-content-center align-content-center w-100 ">
+    <div class="d-flex flex-column w-100 ">
+        <div class="text-center p-1  text-info"><h2>Registration Form</h2></div>
+        <form [formGroup]="registrationForm" (submit)="registration()" class="  w-100 ml-3 ">
+            <div class="row">
+              <div class="col-lg-11">
+                <mat-form-field appearance="outline" floatLabel="always" class="example-full-width">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Name" name="name" formControlName="name" >
+                    <mat-error></mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-11">
+                  <mat-form-field appearance="outline" floatLabel="always" class="example-full-width">
+                      <mat-label>Email</mat-label>
+                      <input matInput placeholder="Email" name="email" formControlName="email" >
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-11">
+                  <mat-form-field appearance="outline" fxFlex="90" floatLabel="always"class="example-full-width">
+                      <mat-label>Password</mat-label>
+                      <input matInput placeholder="Password" name="password" formControlName="password" >
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-11">
+                  <mat-form-field appearance="outline" floatLabel="always" class="example-full-width">
+                      <mat-label>Confirm Password</mat-label>
+                      <input matInput placeholder="Confirm Password" name="confirmPassword" formControlName="confirmPassword" >
+                  </mat-form-field>
+                </div>
+              </div>
+              
+                <div class="text-center ">
+                    <button mat-raised-button color="primary" class=""type="submit" [disabled]="registrationForm.invalid" >Submit</button>
+                  </div> 
+              
+        </form>
+  </div>
+  </div>
+</div>

@@ -25,6 +25,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { DatePipe } from '@angular/common';
+import { RegistrationComponent } from './registration/registration.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { DatePipe } from '@angular/common';
     HeaderComponent,
     FooterComponent,
     RefreshComponent,
+    RegistrationComponent,
+    LoginComponent,
     
     
   ],
@@ -56,7 +60,7 @@ import { DatePipe } from '@angular/common';
     MatButtonToggleModule,
     MatFormFieldModule,
     MatCheckboxModule,
-    MomentDateModule
+    MomentDateModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

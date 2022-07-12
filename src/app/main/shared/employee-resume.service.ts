@@ -12,7 +12,7 @@ export class EmployeeResumeService {
   constructor(private http:HttpClient) { }
 
   public saveEmployeeResume(employeeResume:EmployeeResume):Observable<any> {
-    const url = this.backenedUrl + 'employee/saveEmployeeResume';
+    const url = this.backenedUrl + 'employee/saveEmployee';
     return this.http.post(url,employeeResume)
   }
 

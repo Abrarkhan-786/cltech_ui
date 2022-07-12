@@ -1,0 +1,10 @@
+mat-form-field {
+    width: 100%!important;
+    display: block;
+    font-family:sans-serif;
+    font-weight: 500;
+  }
+  .form{
+    border-radius: 4px;
+    box-shadow: 2px 2px 2px 2px  rgb(182, 181, 181);
+  }

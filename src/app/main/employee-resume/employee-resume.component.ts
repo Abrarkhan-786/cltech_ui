@@ -4,7 +4,7 @@ import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '
 import * as moment from 'moment';
 import { SnackbarService } from 'src/app/common/utility/snackbar.service';
 import { HttpStatus } from 'src/app/constant/enum';
-import { Address, Education, EmployeeDetail, EmployeeResume, Experience, Skill, SocialMediaLink } from '../shared/employee-resume';
+import { Address, Education, EmployeeDetail, EmployeeResume, Experience, Language, Project, Skill, SocialMediaLink } from '../shared/employee-resume';
 import { EmployeeResumeService } from '../shared/employee-resume.service';
 import { Moment } from 'moment';
 
@@ -60,7 +60,7 @@ export class EmployeeResumeComponent implements OnInit {
     phone:['',[Validators.required,Validators.pattern('^[6-9][0-9]{9}$')]],
     alternatePhone:['',[]],
     gender:['',[Validators.required]],
-    DOB:[null,[Validators.required]],
+    dob:[null,[Validators.required]],
     fresher:[false,[]],
     working:[true,[]],
     addreses:this.fb.array([this.initialAddress()]),
@@ -414,15 +414,23 @@ export class EmployeeResumeComponent implements OnInit {
      employeeDetail.alternateEmail=this.resumeForm.value.alternateEmail?this.resumeForm.value.alternateEmail:null;
      employeeDetail.phone=this.resumeForm.value.phone?this.resumeForm.value.phone:null;
      employeeDetail.alternatePhone=this.resumeForm.value.alternatePhone?this.resumeForm.value.alternatePhone:null;
-     employeeDetail.DOB=this.resumeForm.value.DOB?new Date(this.resumeForm.value.DOB):null;
+     employeeDetail.dob=this.resumeForm.value.dob?new Date(this.resumeForm.value.dob):null;
 
      let address=new Address();
      let addressArray:any=(this.resumeForm.value.addreses && this.resumeForm.value.addreses.length>0)?this.resumeForm.value.addreses:null;
-     employeeDetail.addreses.push(addressArray);
+     console.log(JSON.stringify(addressArray));
+     addressArray.forEach((element:any)=>{
+      address.addressLine=element.addressLine;
+      address.city=element.city;
+      address.country=element.country;
+      address.pincode=element.pincode;
+      address.state=element.state;
+      employeeDetail?.addreses.push(address);
+     })
     
     employee.employeeDetail=employeeDetail;
-    employee.working=this.resumeForm.value.working;
-    employee.working=this.resumeForm.value.fresher;
+    employee.isWorking=Boolean(this.resumeForm.value.working);
+    employee.isFresher=Boolean(this.resumeForm.value.fresher);
     employee.expectedCTC=this.resumeForm.value.expectedCTC?Number(this.resumeForm.value.expectedCTC):null;
     employee.currentCTC=this.resumeForm.value.currentCTC?Number(this.resumeForm.value.currentCTC):null;
     employee.preferedLocation=this.resumeForm.value.preferedLocation?this.resumeForm.value.preferedLocation:null;
@@ -434,7 +442,7 @@ export class EmployeeResumeComponent implements OnInit {
                      this.resumeForm.value.socialMediaLink:null;
     socialLink?.forEach((link:any)=>{
       socialMediaLink.gitHub=link.gitHub;
-      socialMediaLink.lindIn=link.linkdin;
+      socialMediaLink.linkedIn=link.linkdin;
       socialMediaLink.stackOverflow=link.stackOverflow;
       employee.socialMediaLinks=socialMediaLink;
     })
@@ -448,7 +456,16 @@ export class EmployeeResumeComponent implements OnInit {
      
      let langArray:any=(this.resumeForm.value.languages && this.resumeForm.value.languages.length>0)?
      this.resumeForm.value.languages:null;
-     employee.languages.push(langArray);
+     let language =new Language();
+     langArray.forEach((element:any)=>{
+      language.languageName=element.languageName;
+      language.proficient=element.proficient;
+      language.isRead=element.read;
+      language.isSpeak=element.speak;
+      language.isWrite=element.write;
+      employee.languages.push(language);
+     })
+     
 
      let educationArray:any=(this.resumeForm.value.educations && this.resumeForm.value.educations.length>0)?
      this.resumeForm.value.educations:null;
@@ -457,8 +474,8 @@ export class EmployeeResumeComponent implements OnInit {
      let education=new Education();
      educationArray.forEach((element:any) => {
       education.degree=element.jobTitle;
-      education.fieldOfStudy=element.jobDescription;
-      education.location=element.organizationName;
+      education.fieldOfStudy=element.fieldOfStudy;
+      education.location=element.location;
       education.schoolName=element.schoolName
       education.completionDate=(element.completionDate)?new Date(element.completionDate):null;;
       education.passingPercentage=Number(element.passingPercentage);
@@ -467,7 +484,13 @@ export class EmployeeResumeComponent implements OnInit {
 
      let projectArray:any=(this.resumeForm.value.projects && this.resumeForm.value.projects.length>0)?
      this.resumeForm.value.projects:null;
-     employee.projects.push(projectArray);
+     let project =new Project();
+     projectArray.forEach((element:any)=>{
+      project.projectName=element.projectName;
+      project.projectDescription=element.projectDescription;
+      employee.projects.push(project);
+     })
+     
 
 
      let experiencArray:any=(this.resumeForm.value.experiences && this.resumeForm.value.experiences.length>0)?
@@ -479,7 +502,7 @@ export class EmployeeResumeComponent implements OnInit {
       experience.organizationName=element.organizationName;
       experience.startDate=(element.startDate)?new Date(element.startDate):null;
       experience.endDate=(element.endDate)?new Date(element.endDate):null;;
-      experience.currentlyWrking=Boolean(element.currentlyWorking);
+      experience.isCurrentlyWorking=Boolean(element.currentlyWorking);
       employee.experiences.push(experience);
 
      });
