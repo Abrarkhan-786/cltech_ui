@@ -11,7 +11,7 @@ import { RequestMethod } from 'src/app/constant/enum';
 export class EmployeeTableComponent implements OnInit {
   @ViewChild('jqxGrid', { static: true }) myGrid!: jqxGridComponent;
  //@ViewChild('jqxGrid') myGrid!: jqxGridComponent;
-  url = "http://localhost:8280/springbootMysqlCrud/employee/getAllEmployeeList";
+  url = "http://localhost:8082/cltech/employee/getAllEmployee";
   width: string = '100%';
   totalrecords!: number;
   EmployeeTableComponent() { }
@@ -30,11 +30,57 @@ export class EmployeeTableComponent implements OnInit {
       { text: 'Id', datafield: 'id',  filterable: true, sortable: true, width: "10%" },
      // { text: 'First Name', datafield: 'firstName',  filterable: true, sortable: true, width: "15%" },
       //{ text: 'Last Name', datafield: 'lastName', filterable: true, sortable: true,  width: "15%"  },
-      { text: 'Name', datafield: 'name',  filterable: true, sortable: true, width: "15%" },
-      { text: 'Email', datafield: 'email',  filterable: true, sortable: true,  width: "25%"  },
-      { text: 'Salary', datafield: 'salary',  filterable: true, sortable: true, width: "20%"  },
-      { text: 'Department', datafield: 'department',  filterable: true, sortable: true,  width: "20%"  },
-      { text: 'Senior', datafield: 'senior',  filterable: true, sortable: true, width: "10%"  }
+      { text: 'Name', datafield: 'employeeDetail',  filterable: true, sortable: true, width: "15%" ,
+      cellsrenderer: function (row: any, column: any, value: any, rowData: any, setting: any, rowObject: any) {
+        if(rowObject.employeeDetail!=null){
+          var employeeName=rowObject.employeeDetail.firstName+" "+rowObject.employeeDetail.lastName;
+          return "<div style='margin-top:13px;padding-left:7px;!important'>"+employeeName+"</div>";
+        }
+        return "";
+      
+     },
+    },
+      { text: 'Email', datafield: 'email',  filterable: true, sortable: true,  width: "20%" ,
+      cellsrenderer: function (row: any, column: any, value: any, rowData: any, setting: any, rowObject: any) {
+        if(rowObject.employeeDetail!=null){
+          var email=rowObject.employeeDetail.email;
+          return "<div style='margin-top:13px;padding-left:7px;!important'>"+email+"</div>";
+        }
+        return "";
+      
+     }, },
+      { text: 'Skill', datafield: 'skill',  filterable: true, sortable: true, width: "20%"  },
+      { text: 'Phone', datafield: 'phone',  filterable: true, sortable: true,  width: "15%" ,
+      cellsrenderer: function (row: any, column: any, value: any, rowData: any, setting: any, rowObject: any) {
+        if(rowObject.employeeDetail!=null){
+          var phone=rowObject.employeeDetail.phone;
+          return "<div style='margin-top:13px;padding-left:7px;!important'>"+phone+"</div>";
+        }
+        return "";
+      
+     }, },
+      { text: 'Fresher', datafield: 'fresher',  filterable: true, sortable: true, width: "10%",
+      cellsrenderer: function (row: any, column: any, value: any, rowData: any, setting: any, rowObject: any) {
+        if(rowObject.employeeDetail!=null){
+          var fresher=rowObject.working?"Yes":"No";
+          return "<div style='margin-top:13px;padding-left:15px;!important'>"+fresher+"</div>";
+        }
+        return "";
+      
+     },
+    
+    },
+      { text: 'Working', datafield: 'working',  filterable: true, sortable: true, width: "10%" ,
+      cellsrenderer: function (row: any, column: any, value: any, rowData: any, setting: any, rowObject: any) {
+        if(rowObject.employeeDetail!=null){
+          var phone=rowObject.working?"Yes":"No";
+          return "<div style='margin-top:13px;padding-left:15px;!important'>"+phone+"</div>";
+        }
+        return "";
+      
+     },
+    
+    }
   ]
   source: any = {
     url: this.url,
@@ -44,13 +90,13 @@ export class EmployeeTableComponent implements OnInit {
     sortcolumn: 'id',
     datafields: [
       { name: 'id', map: 'id', type: 'number' },
-      //{ name: 'firstName', map: 'fiestName', type: 'string' },
-     // { name: 'lastName', map: 'lastName', type: 'string' },
-     { name: 'name', map: 'name', type: 'string' },
-     { name: 'department', map: 'department', type: 'string' },
-      { name: 'email', map: 'email', type: 'string' },
-      { name: 'salary', map: 'salary', type: 'string' },
-      { name: 'senior', map: 'senior', type: 'string' }
+      { name: 'name', map: 'employeeDetail.firstName' },
+      { name: 'email', map: 'employeeDetail.email', type: 'string' },
+      { name: 'skill', map: 'totalSkill', type: 'string' },
+      { name: 'phone', map: 'employeeDetail.phone', type: 'string' },
+      { name: 'fresher', map: 'fresher' },
+      { name: 'working', map: 'working' },
+      { name: 'employeeDetail', map: 'employeeDetail' }
     ],
     formatdata: function (data: any) {
       data["recordstartindex"] = data.pagenum * data.pagesize;
@@ -60,9 +106,9 @@ export class EmployeeTableComponent implements OnInit {
     },
     root: 'Rows',
     cache: false,
-    sort:()=>{
-      this.myGrid.updatebounddata('sort');
-    },
+    // sort:()=>{
+    //   this.myGrid.updatebounddata('sort');
+    // },
   
     // filterHandler(event: any): void {
     //   this.totalrecords = 0;
@@ -73,12 +119,12 @@ export class EmployeeTableComponent implements OnInit {
   
     //   //TODO: filter focus
     // },
-    filter: () => {
-      // update the grid and send a request to the server.
-         this.totalrecords = 0;
-         this.source.totalrecords = 0;
-      this.myGrid.updatebounddata('filter');
-    },
+    // filter: () => {
+    //   // update the grid and send a request to the server.
+    //      this.totalrecords = 0;
+    //      this.source.totalrecords = 0;
+    //   this.myGrid.updatebounddata('filter');
+    // },
     beforeSend: function (jqxhr: any, settings: any) {
       //jqxhr.setRequestHeader("Content-Type","application/json");
       //jqxhr.setRequestHeader("Accept","*/*");
@@ -102,13 +148,8 @@ export class EmployeeTableComponent implements OnInit {
       //console.log(xhr); 
    }
   };
-  
-  
 
   dataAdapter: any = new jqx.dataAdapter(this.source);
-
- 
-
   rendergridrows = (params: any): any => {
     return params.data;
   }

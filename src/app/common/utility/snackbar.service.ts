@@ -16,7 +16,7 @@ export class SnackbarService {
 
    openSucessSnackBar(message:string,backurl:string){
     let snackBarRef=this.snackBar.open(message, "Ok", {
-      duration: 5000,
+      duration: 1000,
       horizontalPosition: "center",
       verticalPosition: "top",
       panelClass: ['green-snackbar'],
@@ -30,7 +30,7 @@ export class SnackbarService {
 
   openErrorSnackBar(message:string){
     let snackBarRef=this.snackBar.open(message, "Ok", {
-      duration: 5000,
+      duration: 1000,
       horizontalPosition: "center",
       verticalPosition: "top",
       panelClass: ['red-snackbar'],

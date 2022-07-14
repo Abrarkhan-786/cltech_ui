@@ -1,9 +1,12 @@
-<div  class="form" style=" width: 30vw; height:75vh;padding:1rem;background: #fff; display: flex; justify-content: center; margin:1rem auto;">
-  <div class="d-flex justify-content-center align-content-center w-100 ">
-    <div class="d-flex flex-column w-100 ">
-        <div class="text-center p-1  text-info"><h2>Registration Form</h2></div>
-        <form [formGroup]="registrationForm" (submit)="registration()" class="  w-100 ml-3 ">
-            <div class="row">
+<div class="form"
+    style=" width: 30vw;padding:1rem;background: #fff; display: flex; justify-content: center; margin:1rem auto;">
+    <div class="d-flex justify-content-center align-content-center w-100 ">
+        <div class="d-flex flex-column w-100 ">
+            <div class="text-center p-1  text-info">
+                <h2>Registration Form</h2>
+            </div>
+            <form [formGroup]="registrationForm" (submit)="registration()" class="  w-100 ml-3 ">
+                <!-- <div class="row">
               <div class="col-lg-11">
                 <mat-form-field appearance="outline" floatLabel="always" class="example-full-width">
                     <mat-label>Name</mat-label>
@@ -11,39 +14,68 @@
                     <mat-error></mat-error>
                 </mat-form-field>
               </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-11">
-                  <mat-form-field appearance="outline" floatLabel="always" class="example-full-width">
-                      <mat-label>Email</mat-label>
-                      <input matInput placeholder="Email" name="email" formControlName="email" >
-                  </mat-form-field>
+            </div> -->
+                <div class="row">
+                    <div class="col-lg-11">
+                        <mat-form-field appearance="outline" floatLabel="always" class="example-full-width">
+                            <mat-label>Email</mat-label>
+                            <input matInput placeholder="Email" name="email" formControlName="email">
+                            <mat-error *ngIf="registrationForm.get('email')?.hasError('required')">
+                                It is required
+                            </mat-error>
+                            <mat-error *ngIf="registrationForm.get('email')?.hasError('email')">
+                                invalid pattern
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
-              </div>
 
-              <div class="row">
-                <div class="col-lg-11">
-                  <mat-form-field appearance="outline" fxFlex="90" floatLabel="always"class="example-full-width">
-                      <mat-label>Password</mat-label>
-                      <input matInput placeholder="Password" name="password" formControlName="password" >
-                  </mat-form-field>
+                <div class="row">
+                    <div class="col-lg-11">
+                        <mat-form-field appearance="outline" fxFlex="90" floatLabel="always" class="example-full-width">
+                            <mat-label>Password</mat-label>
+                            <input matInput placeholder="Password" name="password" formControlName="password">
+                            <mat-error *ngIf="registrationForm.get('password')?.hasError('required')">
+                                It is required
+                            </mat-error>
+                            <mat-error *ngIf="registrationForm.get('password')?.hasError('minlength')">
+                                atleast 8 character
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
-              </div>
 
-              <div class="row">
-                <div class="col-lg-11">
-                  <mat-form-field appearance="outline" floatLabel="always" class="example-full-width">
-                      <mat-label>Confirm Password</mat-label>
-                      <input matInput placeholder="Confirm Password" name="confirmPassword" formControlName="confirmPassword" >
-                  </mat-form-field>
+                <div class="row">
+                    <div class="col-lg-11">
+                        <mat-form-field appearance="outline" floatLabel="always" class="example-full-width">
+                            <mat-label>Confirm Password</mat-label>
+                            <input matInput placeholder="Confirm Password" name="confirmPassword"
+                                formControlName="confirmPassword" (keyup)="validatePassword($event)">
+                            <mat-error *ngIf="registrationForm.get('confirmPassword')?.hasError('required')">
+                                It is required
+                            </mat-error>
+                            <mat-error *ngIf="registrationForm.get('confirmPassword')?.hasError('passwordMismatch')">
+                                password and confirmPassword must be same
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
-              </div>
-              
+
                 <div class="text-center ">
-                    <button mat-raised-button color="primary" class=""type="submit" [disabled]="registrationForm.invalid" >Submit</button>
-                  </div> 
-              
-        </form>
-  </div>
-  </div>
+                    <button mat-raised-button color="primary" class="" type="submit"
+                        [disabled]="registrationForm.invalid">Submit</button>
+                </div>
+            </form>
+            <div class="mt-1">
+                <div>
+                    <h4 class="text-center">-------------------Already have an account?-------------------</h4>
+                </div>
+                <div class="text-center">
+                    <button mat-raised-button class="w-100" color="primary" type="button" (click)="goToLoginPage()">Sign
+                        In</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
