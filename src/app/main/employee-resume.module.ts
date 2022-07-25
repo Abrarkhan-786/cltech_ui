@@ -22,14 +22,26 @@ import { MomentDateModule } from '@angular/material-moment-adapter';
 import { EmployeeTableComponent } from './employee-table/employee-table.component';
 import { DataTablesModule } from "angular-datatables";
 import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
+import { GridEmployeeComponent } from './grid-employee/grid-employee.component';
+import { ViewEmployeeResumeComponent } from './view-employee-resume/view-employee-resume.component';
+import { EditEmployeeResumeComponent } from './edit-employee-resume/edit-employee-resume.component';
 const routes: Routes = [
-  { path: '', component: EmployeeResumeComponent },
-  {path:'employees',component:EmployeeTableComponent}
+  { path: 'add-employee', component: EmployeeResumeComponent },
+  {path:'employees',component:EmployeeTableComponent},
+  { path: '', component:GridEmployeeComponent },
+  { path: 'view-employee', component:ViewEmployeeResumeComponent },
+  { path: 'edit-employee', component:EditEmployeeResumeComponent },
 ];
 
 
 @NgModule({
-  declarations: [EmployeeResumeComponent, EmployeeTableComponent],
+  declarations: [
+    EmployeeResumeComponent, 
+    EmployeeTableComponent,
+    GridEmployeeComponent,
+    ViewEmployeeResumeComponent,
+    EditEmployeeResumeComponent
+  ],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,

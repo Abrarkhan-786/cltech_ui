@@ -27,6 +27,11 @@ import { MomentDateModule } from '@angular/material-moment-adapter';
 import { DatePipe } from '@angular/common';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
+import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
+import { DataTablesModule } from 'angular-datatables';
+import { ResumeModalModule } from './pop-up/resume-modal/resume-modal.module';
+import { MatCardModule } from '@angular/material/card';
+import { DepartmentComponent } from './admin/department/department.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +41,7 @@ import { LoginComponent } from './login/login.component';
     RefreshComponent,
     RegistrationComponent,
     LoginComponent,
+    DepartmentComponent,
     
     
   ],
@@ -61,6 +67,10 @@ import { LoginComponent } from './login/login.component';
     MatFormFieldModule,
     MatCheckboxModule,
     MomentDateModule,
+    jqxGridModule,
+    DataTablesModule,
+    ResumeModalModule,
+    MatCardModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

@@ -22,3 +22,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color: white !important;
     border: none;
 }
+
+.dataTables_empty {
+    display: none;
+  }
+
+  .action{
+    text-align: center!important;
+  }
+
+  /* table.dataTable tbody th,
+  table.dataTable tbody td {
+    white-space: nowrap;
+} */

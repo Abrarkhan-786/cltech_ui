@@ -1,0 +1,56 @@
+/* Structure */
+.example-container {
+  position: relative;
+}
+
+.example-table-container {
+  position: relative;
+  min-height: 200px;
+  max-height: 400px;
+  overflow: auto;
+}
+
+table {
+    width: 100%;
+  }
+  .heading{
+    display: inline-block;
+    background: blueviolet; 
+    padding:10px;
+    color:white;
+    box-shadow: 2px ,2px, 5px grey;
+    border-radius: 4px;
+    text-align: center;
+    margin-top:1rem;
+    justify-content: center;
+    position:relative;
+    left: 43%;
+    right: 50%;
+
+   
+}
+
+input[type=file]{
+  width: 100%; 
+  padding: 3px 4px;
+  /* margin: 8px 0; */
+  /* display: inline-block; */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+  
+.dataTables_empty{
+  display: none;
+}
+table.dataTable tbody th,
+table.dataTable tbody td {
+    white-space: nowrap;
+}
+
+.action{
+  text-align: center!important;
+}
+
+  
+  

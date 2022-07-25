@@ -1,0 +1,49 @@
+
+<div class="container">
+    <div class="card m-5 p-3">
+        <div class="card-body bg-white shadow rounded mt-4 table-responsive">
+   <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped table-hover " >
+    <thead>
+      <!-- <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Salary</th>
+        <th>Department</th>
+        <th>Action</th>
+       
+      </tr> -->
+    </thead>
+    <tbody *ngIf="users?.length != 0">
+      <tr *ngFor="let user of users">
+        <!-- <td>{{ (person.id==972)?"yes":person.id}}</td> -->
+  
+        <td>{{ user.id }}</td>
+        <td>{{ user.email }}</td>
+        <!-- <td>{{ user.departments}}</td> -->
+        <!-- <td>{{ person.lastName }}</td>
+        <td>{{ person.lastName }}</td> -->
+       
+        <td>
+          <div class="d-flex justify-content-around">
+            <div>
+              <button mat-raised-button color="primary" (click)="action('edit',user.id)">Edit</button>
+            </div>
+            <div>
+              <button mat-raised-button color="accent" (click)="action('view',user.id)">View</button>
+            </div>
+          </div>
+         
+        </td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="users?.length == 0">
+      <tr>
+        <td colspan="7" class="no-data-available text-lg-center">No Data Found!</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  </div>
+  </div>
+  

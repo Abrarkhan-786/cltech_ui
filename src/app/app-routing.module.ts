@@ -19,6 +19,10 @@ const routes: Routes = [
   loadChildren: () => import('./main/employee-resume.module').then(m => m.EmployeeResumeModule),
   },
   
+  {path      : 'admin',
+  canActivate:[AuthGuard],
+  loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+  },
 ];
 
 @NgModule({

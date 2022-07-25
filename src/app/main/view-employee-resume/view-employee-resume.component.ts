@@ -7,19 +7,21 @@ import { HttpStatus } from 'src/app/constant/enum';
 import { Address, Education, EmployeeDetail, EmployeeResume, Experience, Language, Project, Skill, SocialMediaLink } from '../shared/employee-resume';
 import { EmployeeResumeService } from '../shared/employee-resume.service';
 import { Moment } from 'moment';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-employee-resume',
-  templateUrl: './employee-resume.component.html',
-  styleUrls: ['./employee-resume.component.css']
+  selector: 'app-view-employee-resume',
+  templateUrl: './view-employee-resume.component.html',
+  styleUrls: ['./view-employee-resume.component.css']
 })
-export class EmployeeResumeComponent implements OnInit {
+export class ViewEmployeeResumeComponent implements OnInit {
 
-  title="Employee Form"
+  title=" View Employee Form"
   hidden:boolean=false;
   hiddenCurrentCtc:boolean=true;
   hideEndDate:any;
   dataTableUrl:any="/resumeBuilder";
+  employeeDetail:any;
   @ViewChild('myInput') inputElement!: ElementRef;
   maxDate!: Moment;
   minDate!: Moment;
@@ -28,6 +30,8 @@ export class EmployeeResumeComponent implements OnInit {
     private employeeService :EmployeeResumeService,
     private snackbar:SnackbarService, 
     private datePipe: DatePipe,
+    private activatedRoute:ActivatedRoute,
+    private router:Router,
   ) { 
       this.setDobCalender();
   }
@@ -82,8 +86,153 @@ export class EmployeeResumeComponent implements OnInit {
 
   // required to perform some operation at time of loading of application
   ngOnInit(): void {
-    
+    this.getDetail()
   }
+
+    getDetail(){
+    this.activatedRoute.queryParams.subscribe((params)=>{
+      const id=params['param'];
+      this.employeeService.getEmployeeById(id).subscribe((data)=>{
+        if(data!=null && data!=undefined && data.response!=null && data.status==HttpStatus.SUCCESS){
+           this.employeeDetail=data.response;
+          this.resumeForm.patchValue({
+             'id':data.response.id,
+             'carrierObjective':data.response.carrierObjective,
+             'firstName':data.response.employeeDetail.firstName,
+             'lastName':data.response.employeeDetail.lastName,
+             'email':data.response.employeeDetail.email,
+             'alternateEmail':data.response.employeeDetail.alternateEmail,
+             'phone':data.response.employeeDetail.phone,
+             'alternatePhone':data.response.employeeDetail.alternatePhone,
+             'gender':data.response.employeeDetail.gender,
+             'dob':data.response.employeeDetail.dob,
+             'fresher':data.response.isFresher,
+             'working':data.response.isWorking,
+             'currentCTC':data.response.currentCTC,
+             'expectedCTC':data.response.expectedCTC,
+             'preferedLocation':data.response.preferedLocation,
+             'cerification':data.response.certifications,
+             'hobbies':data.response.hobbies,
+          })
+
+          this.resumeForm.setControl("addreses",this.existingAddress(data.response.employeeDetail.addreses))
+          this.resumeForm.setControl("experiences",this.existingExperience(data.response?.experiences))
+          this.resumeForm.setControl("projects",this.existingProject(data.response?.projects))
+          this.resumeForm.setControl("languages",this.existingLanguage(data.response.languages))
+          this.resumeForm.setControl("skills",this.existingSkill(data.response.skills))
+          this.resumeForm.setControl("socialMediaLink",this.existingsocialMedailLink(data.response?.socialMediaLinks))
+          this.resumeForm.setControl("educations",this.existingEducation(data.response.educations))
+
+          this.resumeForm.disable();
+        }else{
+          this.snackbar.openErrorSnackBar(data.message);
+        }
+      })
+    })
+   }
+
+   existingAddress(addressSet:any):FormArray{
+     const formArray:any=new FormArray([]);
+     addressSet.forEach((address:Address)=>{
+      formArray.push( this.fb.group({
+        'addressLine':address.addressLine,
+        'country':address.country,
+        'state':address.state,
+        'city':address.city,
+        'pincode':address.pincode
+        })) ;
+     })
+     return formArray;
+    }
+    existingExperience(experienceSet:any):FormArray{
+      const formArray:any=new FormArray([]);
+       experienceSet.forEach((experience:Experience)=>{
+        formArray.push(
+          this.fb.group({
+            'jobTitle':experience.jobTitle,
+            'organizationName':experience.organizationName,
+            'jobDescription':experience.jobDescription,
+            'startDate':experience.startDate,
+            'endDate':experience.endDate,
+            'currentlyWorking':experience.isCurrentlyWorking,
+           })
+        )
+       })
+      return formArray;
+     }
+     
+     existingEducation(educationSet:any):FormArray{
+      const formArray:any=new FormArray([]);
+      educationSet.forEach((education:Education)=>{
+        formArray.push(
+          this.fb.group({
+            'degree':education.degree,
+            'fieldOfStudy':education.fieldOfStudy,
+            'location':education.location,
+            'schoolName':education.schoolName,
+            'passingPercentage':education.passingPercentage,
+            'completionDate':education.completionDate,
+           })
+        )
+      })
+      return formArray;
+      }
+      
+      existingLanguage(languageSet:any):FormArray{
+       const formArray:any=new FormArray([]);
+       languageSet.forEach((language:Language)=>{
+        formArray.push(
+          this.fb.group({
+            'languageName':language.languageName,
+            'proficient':language.proficient,
+            'read':language.isRead,
+            'speak':language.isSpeak,
+            'write':language.isWrite,
+           })
+        )
+       })
+      return formArray;
+     }
+      
+    existingsocialMedailLink(socialMediaLinkSet:any):FormArray{
+      const formArray:any=new FormArray([]);
+      if(socialMediaLinkSet!==null ||socialMediaLinkSet!=undefined ){
+        formArray.push(
+          this.fb.group({
+            'gitHub':socialMediaLinkSet?.gitHub,
+            'linkdin':socialMediaLinkSet?.linkdin,
+            'stackOverflow':socialMediaLinkSet?.stackOverflow,
+           })
+          )
+      }
+      return formArray;
+     }
+     
+     existingProject(projectSet:any):FormArray{
+      const formArray:any=new FormArray([]);
+        projectSet.forEach((project:Project)=>{
+         formArray.push(
+          this.fb.group({
+          'projectName':project.projectName,
+          'projectDescription':project.projectDescription,
+         })) 
+      })
+       
+      return formArray;
+     }
+
+     existingSkill(skillSet:any):FormArray{
+      const formArray:any=new FormArray([]);
+      skillSet.forEach((skill:Skill)=>{
+       formArray.push(
+        this.fb.group({
+          'skillName':skill.skillName,
+          'skillExp':skill.skillExp,
+         }))
+    })
+     
+    return formArray;
+     }
 
   setDobCalender(){
     const currentYear = moment().year();
@@ -379,144 +528,9 @@ export class EmployeeResumeComponent implements OnInit {
       this.resumeForm.get('alternatePhone')?.updateValueAndValidity();
     }
   }
-   saveResumeForm(){
-     if(this.resumeForm.invalid){
-      return;
-     }
 
-     if(this.resumeForm.value.alternateEmail?.trim()){
-      if(this.resumeForm.value.email===this.resumeForm.value.alternateEmail.trim()){
-        console.log("email="+this.resumeForm.value.email)
-        console.log("alternateEmail="+this.resumeForm.value.alternateEmail)
-        this.snackbar.openErrorSnackBar("email and alternate email must be different")
-           return;
-       }
-     }
-     
-     if(this.resumeForm.value.alternatePhone?.trim()){
-      if(this.resumeForm.value.phone===this.resumeForm.value.alternatePhone.trim()){
-        console.log("phone="+this.resumeForm.value.email)
-        console.log("alternatePhone="+this.resumeForm.value.alternateEmail)
-           this.snackbar.openErrorSnackBar("phone and alternate phone must be different")
-        return;
-       }
-     }
-
-    
-
-     let employee=new EmployeeResume();
-     employee.id=(this.resumeForm.value.id?.trim())?Number(this.resumeForm.value.id):null;
-     employee.carrierObjective=this.resumeForm!.value!.carrierObjective;
-     
-     let employeeDetail=new EmployeeDetail();
-     employeeDetail.firstName=this.resumeForm.value.firstName?this.resumeForm.value.firstName:null;
-     employeeDetail.lastName=this.resumeForm.value.lastName?this.resumeForm.value.lastName:null;
-     employeeDetail.email=this.resumeForm.value.email?this.resumeForm.value.email:null;
-     employeeDetail.alternateEmail=this.resumeForm.value.alternateEmail?this.resumeForm.value.alternateEmail:null;
-     employeeDetail.phone=this.resumeForm.value.phone?this.resumeForm.value.phone:null;
-     employeeDetail.alternatePhone=this.resumeForm.value.alternatePhone?this.resumeForm.value.alternatePhone:null;
-     employeeDetail.dob=this.resumeForm.value.dob?new Date(this.resumeForm.value.dob):null;
-     employeeDetail.gender=this.resumeForm.value.gender;
-     let address=new Address();
-     let addressArray:any=(this.resumeForm.value.addreses && this.resumeForm.value.addreses.length>0)?this.resumeForm.value.addreses:null;
-     console.log(JSON.stringify(addressArray));
-     addressArray.forEach((element:any)=>{
-      address.addressLine=element.addressLine;
-      address.city=element.city;
-      address.country=element.country;
-      address.pincode=element.pincode;
-      address.state=element.state;
-      employeeDetail?.addreses.push(address);
-     })
-    
-    employee.employeeDetail=employeeDetail;
-    employee.isWorking=Boolean(this.resumeForm.value.working);
-    employee.isFresher=Boolean(this.resumeForm.value.fresher);
-    employee.expectedCTC=this.resumeForm.value.expectedCTC?Number(this.resumeForm.value.expectedCTC):null;
-    employee.currentCTC=this.resumeForm.value.currentCTC?Number(this.resumeForm.value.currentCTC):null;
-    employee.preferedLocation=this.resumeForm.value.preferedLocation?this.resumeForm.value.preferedLocation:null;
-    employee.certifications=this.resumeForm.value.cerification?this.resumeForm.value.cerification:null;
-    employee.hobbies=this.resumeForm.value.hobbies?this.resumeForm.value.hobbies:null;
-    console.log(this.resumeForm.value)
-    let socialMediaLink=new SocialMediaLink();
-    let socialLink=(this.resumeForm.value.socialMediaLink && this.resumeForm.value.socialMediaLink.length>0)?
-                     this.resumeForm.value.socialMediaLink:null;
-    socialLink?.forEach((link:any)=>{
-      socialMediaLink.gitHub=link.gitHub;
-      socialMediaLink.linkedIn=link.linkdin;
-      socialMediaLink.stackOverflow=link.stackOverflow;
-      employee.socialMediaLinks=socialMediaLink;
-    })
-    let skill=new Skill();
-    let skillArray:any=(this.resumeForm.value.skills && this.resumeForm.value.skills.length>0)? this.resumeForm.value.skills:null;
-                    skillArray?.forEach((skill:any)=>{
-                      skill.skillName=skill.skillName;
-                      skill.skillExp=skill.skillExp?Number(skill.skillExp):null;
-                      employee.skills.push(skill)
-                    })
-     
-     let langArray:any=(this.resumeForm.value.languages && this.resumeForm.value.languages.length>0)?
-     this.resumeForm.value.languages:null;
-     let language =new Language();
-     langArray.forEach((element:any)=>{
-      language.languageName=element.languageName;
-      language.proficient=element.proficient;
-      language.isRead=element.read;
-      language.isSpeak=element.speak;
-      language.isWrite=element.write;
-      employee.languages.push(language);
-     })
-     
-
-     let educationArray:any=(this.resumeForm.value.educations && this.resumeForm.value.educations.length>0)?
-     this.resumeForm.value.educations:null;
-
-     //education
-     let education=new Education();
-     educationArray.forEach((element:any) => {
-      education.degree=element.degree;
-      education.fieldOfStudy=element.fieldOfStudy;
-      education.location=element.location;
-      education.schoolName=element.schoolName
-      education.completionDate=(element.completionDate)?new Date(element.completionDate):null;;
-      education.passingPercentage=Number(element.passingPercentage);
-      employee.educations.push(education);
-     });
-
-     let projectArray:any=(this.resumeForm.value.projects && this.resumeForm.value.projects.length>0)?
-     this.resumeForm.value.projects:null;
-     let project =new Project();
-     projectArray.forEach((element:any)=>{
-      project.projectName=element.projectName;
-      project.projectDescription=element.projectDescription;
-      employee.projects.push(project);
-     })
-     
-
-
-     let experiencArray:any=(this.resumeForm.value.experiences && this.resumeForm.value.experiences.length>0)?
-     this.resumeForm.value.experiences:null;
-     let experience=new Experience()
-     experiencArray.forEach((element:any) => {
-      experience.jobTitle=element.jobTitle;
-      experience.jobDescription=element.jobDescription;
-      experience.organizationName=element.organizationName;
-      experience.startDate=(element.startDate)?new Date(element.startDate):null;
-      experience.endDate=(element.endDate)?new Date(element.endDate):null;;
-      experience.isCurrentlyWorking=Boolean(element.currentlyWorking);
-      employee.experiences.push(experience);
-
-     });
-    console.log(employee)
-
-     this.employeeService.saveEmployeeResume(employee).subscribe((data)=>{
-      if(data!=null && data.response!=null && data.status==HttpStatus.SUCCESS){
-        this.snackbar.openSucessSnackBar(data.message,this.dataTableUrl);
-        //this.resumeForm.reset();
-      }else{
-        this.snackbar.openErrorSnackBar(data.message);
-      }
-     })
-
-  }                       
+  backToGrid(){
+    this.router.navigate([this.dataTableUrl]);
+  }
+                
 }

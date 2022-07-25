@@ -45,7 +45,7 @@ export class EmployeeDetail{
     employeeDetailId!:number
     firstName!: string |null;
     lastName!: string | null;
-    gender!: string | null;
+    gender!: string | null |undefined;
     email!: string | null;
     alternateEmail!: string | null;
     phone!: string | null | undefined;

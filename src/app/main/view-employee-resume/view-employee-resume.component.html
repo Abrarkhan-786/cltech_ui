@@ -10,7 +10,7 @@
                </div>
               </div>
             </div>
-             <form [formGroup]="resumeForm" (submit)="saveResumeForm()">
+             <form [formGroup]="resumeForm">
                 <div class="row">
                   <div class="col-6">
                     <mat-form-field appearance="outline" floatLabel="always" class="pl-3">
@@ -689,7 +689,7 @@
               </div>
             </div>
             <div class="text-center mt-2">
-              <button mat-raised-button color="primary" class=""type="submit" [disabled]="resumeForm.invalid" >Save</button>
+              <button mat-raised-button color="primary" class=""type="bytton" (click)="backToGrid()" >Back</button>
             </div> 
             </form>
            </div>

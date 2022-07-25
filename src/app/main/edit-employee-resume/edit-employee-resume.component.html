@@ -10,7 +10,7 @@
                </div>
               </div>
             </div>
-             <form [formGroup]="resumeForm" (submit)="saveResumeForm()">
+             <form [formGroup]="resumeForm" (submit)="updateResumeForm()">
                 <div class="row">
                   <div class="col-6">
                     <mat-form-field appearance="outline" floatLabel="always" class="pl-3">
@@ -688,9 +688,14 @@
                 </div>
               </div>
             </div>
-            <div class="text-center mt-2">
-              <button mat-raised-button color="primary" class=""type="submit" [disabled]="resumeForm.invalid" >Save</button>
+           <div class="d-flex justify-content-center align-content-center">
+            <div class="text-center mt-2 mr-2">
+              <button mat-raised-button color="primary" class="" type="submit" [disabled]="resumeForm.invalid" >update</button>
             </div> 
+            <div class="text-center mt-2 ml-2">
+              <button mat-raised-button color="primary" class="" type="button" (click)="backToGrid()" >Back</button>
+            </div> 
+           </div>
             </form>
            </div>
         </div>
