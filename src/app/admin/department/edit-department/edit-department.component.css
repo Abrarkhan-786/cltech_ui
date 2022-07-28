@@ -1,0 +1,36 @@
+*{
+    box-sizing: border-box;
+    padding:0;
+    margin:0;
+}
+
+/* mat-form-field {
+    width: 100%!important;
+    display: block;
+    font-family:sans-serif;
+    font-weight: 500;
+  }*/
+  /* .form-div{
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 2px 2px 2px 2px  rgb(182, 181, 181);
+    
+  }  */
+
+  .heading-div{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  .cross{
+    position: absolute;
+    top: -3px;
+    right: 3px;
+  }
+  .cross i{
+    font-size: 1.3rem;
+    color: rgb(1, 1, 32);
+
+  }

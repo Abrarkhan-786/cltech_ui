@@ -4,6 +4,7 @@ import { UntypedFormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { User } from '../admin/user';
 import { LocalStorageService } from '../common/utility/localStorage.service';
 import { EmployeeResume } from '../main/shared/employee-resume';
 import { UserModel } from './userModel';
@@ -27,7 +28,7 @@ export class AuthticationService {
       }
     
 
-  public registration(model:UserModel):Observable<any> {
+  public registration(model:User):Observable<any> {
     const headers = new HttpHeaders(model ? {
       authorization : 'Basic ' + btoa(model.email + ':' + model.password)
       } : {});
@@ -58,5 +59,10 @@ export class AuthticationService {
     let user = this.localStorageService.getLocalStorage("USER_NAME_SESSION_ATTRIBUTE_NAME");
     if (user===null) return ''
     return user
+  }
+
+  public getRole():Observable<any> {
+     const url = this.backenedUrl + 'authentication/getRole';
+    return this.http.post(url,{})
   }
 }

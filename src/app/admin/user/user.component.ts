@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -12,6 +12,8 @@ import { DataTableDirective } from 'angular-datatables/src/angular-datatables.di
 import { environment } from 'src/environments/environment';
 import { HttpStatus } from 'src/app/constant/enum';
 import { ResumeModalComponent } from 'src/app/pop-up/resume-modal/resume-modal.component';
+import { EditUserDepartmentComponent } from './edit-user-department/edit-user-department.component';
+import { NavItem } from '../navigation/data';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -24,8 +26,10 @@ export class UserComponent implements OnInit {
   datatableElement!: DataTableDirective;
   instruction:string='Do you want delete record?'
   confirmation:any;
+   departments = new FormControl('');
   extraParam={"extraParam":4};
   users:any;
+  menu=NavItem;
    displayedColumn:any=[
 
      { 
@@ -102,32 +106,22 @@ export class UserComponent implements OnInit {
     };
   }
 
-  
+  navigateToDepartment(){
+    this.router.navigate(['admin/department']);
+  }
  
   
 
   action(action:string,id:any){
-    if(action=="edit"){
-     this.router.navigate(["resumeBuilder/edit-user"],{ queryParams: { param: id },skipLocationChange:true})
-    }else if(action=="view"){
-      this.router.navigate(["resumeBuilder/view-user"],{queryParams:{param:id},skipLocationChange:true})
-    }
+    // if(action=="edit"){
+    //  this.router.navigate(["admin/edit-user-department"],{ queryParams: { param: id },skipLocationChange:true})
+    // }
+    this.dialog.open(EditUserDepartmentComponent, {
+     width: '500px',
+     disableClose:true,
+      data: {'id': id},
+    });
   }
 
-  openResumeDialogBox(id:number){
-    const dialogRef = this.dialog.open(ResumeModalComponent, {
-      disableClose: true,
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      height: '100%',
-      width: '100%',
-      panelClass: 'full-screen-modal',
-      enterAnimationDuration:'500ms',
-      exitAnimationDuration:'300ms',
-      data: {instruction:this.instruction},
-    });
-    dialogRef.afterClosed().subscribe((result: any) => {
-      
-    });
-  }
+  
 }   

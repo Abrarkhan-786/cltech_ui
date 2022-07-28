@@ -12,13 +12,13 @@
             </div>
              <form [formGroup]="resumeForm" (submit)="saveResumeForm()">
                 <div class="row">
-                  <div class="col-6">
+                  <div class="col-3">
                     <mat-form-field appearance="outline" floatLabel="always" class="pl-3">
                         <mat-label>Id</mat-label>
                         <input matInput placeholder="Id" name="id" formControlName="id" [readonly]="true">
                     </mat-form-field>
                   </div>
-                  <div class="col-6">
+                  <div class="col-3">
                     <mat-form-field appearance="outline" floatLabel="always" class="pr-3">
                       <mat-label>Objective</mat-label>
                       <textarea matInput formControlName="carrierObjective"
@@ -36,6 +36,17 @@
                       </mat-error>
                       <mat-error *ngIf="resumeForm.get('carrierObjective')?.hasError('maxlength')">
                         at max 256 Character long
+                      </mat-error>
+                  </mat-form-field>
+                  </div>
+                  <div class="col-6">
+                    <mat-form-field appearance="outline" fxFlex="90" floatLabel="always" class="example-full-width">
+                      <mat-label>Post</mat-label>
+                      <mat-select formControlName="post" placeholder="what you are looking for?" name="post" multiple (selectionChange)="selectedPostValue($event)">
+                          <mat-option *ngFor="let department of departments" [value]="department">{{department?.departmentName}}</mat-option>
+                        </mat-select>
+                      <mat-error *ngIf="resumeForm.get('post')?.hasError('required')">
+                          It is required
                       </mat-error>
                   </mat-form-field>
                   </div>

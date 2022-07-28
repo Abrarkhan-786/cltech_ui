@@ -12,19 +12,21 @@ import { DataTableDirective } from 'angular-datatables/src/angular-datatables.di
 import { environment } from 'src/environments/environment';
 import { HttpStatus } from 'src/app/constant/enum';
 import { ResumeModalComponent } from 'src/app/pop-up/resume-modal/resume-modal.component';
+import { LocalStorageService } from 'src/app/common/utility/localStorage.service';
 @Component({
   selector: 'app-grid-employee',
   templateUrl: './grid-employee.component.html',
   styleUrls: ['./grid-employee.component.css']
 })
 export class GridEmployeeComponent implements OnInit ,OnDestroy{
+
   backenedUrl = environment.BACKEND_URL;
   dtOptions: DataTables.Settings = {};
   @ViewChild(DataTableDirective, { static: false })
   datatableElement!: DataTableDirective;
   instruction:string='Do you want delete record?'
   confirmation:any;
-  extraParam={"extraParam":4};
+  extraParam={"extraParam":this.localStorageService.getLocalStorage('USER_NAME_SESSION_ATTRIBUTE_NAME')};
   employees:any;
    displayedColumn:any=[
 
@@ -89,6 +91,7 @@ export class GridEmployeeComponent implements OnInit ,OnDestroy{
     private http: HttpClient,
     private router:Router,
     public dialog: MatDialog,
+    private localStorageService:LocalStorageService
     ) {}
   
   dtTrigger: Subject<any> = new Subject<any>();

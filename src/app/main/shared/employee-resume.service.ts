@@ -21,5 +21,9 @@ export class EmployeeResumeService {
     return this.http.get(url)
   }
   
+  public getAllDepartments():Observable<any> {
+    const url = this.backenedUrl + 'department/getAllDepartments';
+    return this.http.get(url)
+  }
 
 }

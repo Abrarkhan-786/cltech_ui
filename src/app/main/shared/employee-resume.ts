@@ -16,9 +16,15 @@ export class EmployeeResume{
  currentCTC:number |null |undefined;
  expectedCTC!:number |null |undefined;
  preferedLocation!:string |null |undefined; 
-    EmployeeResume(){}
+ posts:Array<Post>=[]
+    constructor(){}
 }
 
+export class Post{
+      id!:number;
+	  departmentId!:number|null|undefined;
+	  departmentName!:string|null|undefined
+}
 export class Skill{
     id!: number;
     skillName!: string;

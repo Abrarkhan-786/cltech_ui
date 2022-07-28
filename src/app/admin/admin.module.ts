@@ -20,15 +20,29 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { DataTablesModule } from 'angular-datatables';
+import { EditUserDepartmentComponent } from './user/edit-user-department/edit-user-department.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatIconModule} from '@angular/material/icon';
+import {MatListModule} from '@angular/material/list';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { DepartmentComponent } from './department/department.component';
+import { ViewDepartmentComponent } from './department/view-department/view-department.component';
+import { EditDepartmentComponent } from './department/edit-department/edit-department.component';
+import { AddDepartmentComponent } from './department/add-department/add-department.component';
+
+
 const routes: Routes = [
   { path: '', component:UserComponent },
-  { path: 'view-user', component:UserComponent },
-  { path: 'update-user-department', component:UserComponent },
+  { path: 'edit-user-department', component:EditUserDepartmentComponent },
+  { path: 'department', component:DepartmentComponent },
+  { path: 'department/edit-department', component:EditDepartmentComponent },
+  { path: 'department/view-department', component:ViewDepartmentComponent },
+  { path: 'department/add-department', component:AddDepartmentComponent },
 ];
 
 
 @NgModule({
-  declarations: [UserComponent],
+  declarations: [UserComponent,EditUserDepartmentComponent,AddDepartmentComponent,EditDepartmentComponent,ViewDepartmentComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
@@ -51,6 +65,10 @@ const routes: Routes = [
     MatCheckboxModule,
     MomentDateModule,
     DataTablesModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatExpansionModule
   ]
 })
 export class AdminModule { }

@@ -7,6 +7,7 @@ import { HttpStatus } from 'src/app/constant/enum';
 import { Address, Education, EmployeeDetail, EmployeeResume, Experience, Language, Project, Skill, SocialMediaLink } from '../shared/employee-resume';
 import { EmployeeResumeService } from '../shared/employee-resume.service';
 import { Moment } from 'moment';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-employee-resume',
@@ -20,6 +21,7 @@ export class EmployeeResumeComponent implements OnInit {
   hiddenCurrentCtc:boolean=true;
   hideEndDate:any;
   dataTableUrl:any="/resumeBuilder";
+  departments:any;
   @ViewChild('myInput') inputElement!: ElementRef;
   maxDate!: Moment;
   minDate!: Moment;
@@ -75,14 +77,22 @@ export class EmployeeResumeComponent implements OnInit {
     skills:this.fb.array([this.initialSkill()]),
     cerification:['',[]],
     socialMediaLink:this.fb.array([]),
-    hobbies:['']
+    hobbies:[''],
+    //post:[[{'id':0,"departmentName":""}],Validators.required]
+    post:[,Validators.required]
   },
   
   )
 
   // required to perform some operation at time of loading of application
   ngOnInit(): void {
-    
+    this.getAllDepartments();
+  }
+
+  selectedPostValue(event: MatSelectChange){
+     this.resumeForm.patchValue({
+       'post':event.source.value
+     })
   }
 
   setDobCalender(){
@@ -349,7 +359,15 @@ export class EmployeeResumeComponent implements OnInit {
   //   }
 
  
-
+ getAllDepartments(){
+    this.employeeService.getAllDepartments().subscribe((data:any)=>{
+      if(data!=null && data.response!=null && data.status==HttpStatus.SUCCESS){
+       this.departments=data.response;
+      }else{
+        this.snackbar.openErrorSnackBar(data.message)
+      }
+     })
+  }
   onAlternatEmailChange() {
     let alternateEmailSelected = this.resumeForm?.get('alternateEmail')?.value;
     if(alternateEmailSelected !=null) {
@@ -437,7 +455,17 @@ export class EmployeeResumeComponent implements OnInit {
     employee.preferedLocation=this.resumeForm.value.preferedLocation?this.resumeForm.value.preferedLocation:null;
     employee.certifications=this.resumeForm.value.cerification?this.resumeForm.value.cerification:null;
     employee.hobbies=this.resumeForm.value.hobbies?this.resumeForm.value.hobbies:null;
+   let postArray:any=this.resumeForm.value.post;
+   let posts= postArray.map((post:any) => {
+      return{
+           "id":null,
+           "departmentName":post.departmentName,
+           "departmentId":post.id,
+      }
+    });
+    employee.posts=posts;
     console.log(this.resumeForm.value)
+    //console.log(this.resumeForm.value.post)
     let socialMediaLink=new SocialMediaLink();
     let socialLink=(this.resumeForm.value.socialMediaLink && this.resumeForm.value.socialMediaLink.length>0)?
                      this.resumeForm.value.socialMediaLink:null;

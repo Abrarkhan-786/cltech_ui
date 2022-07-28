@@ -1,1 +1,40 @@
-
+<div class="container">
+    <div class="card m-5 p-3">
+      <div class="text-left ml-1 ">
+        <button class="btn btn-outline-success mr-1"  type="button" (click)="action('add',0)">Add Departments</button>
+        <button class="btn btn-outline-dark ml-1"  type="button" (click)="backToRecruiters()">Back To Recruiters</button>
+      </div>
+      <div class="card-body bg-white shadow rounded mt-4 table-responsive">
+        <div class="text-center">
+          <h2 style="color:rgb(9, 9, 105) ; font-family: 'Times New Roman', Times, serif; font-size: 1.5rem;">{{title}}</h2>
+        </div>
+        
+        <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped table-hover ">
+          <thead></thead>
+          <tbody *ngIf="departments?.length != 0">
+            <tr *ngFor="let department of departments">
+              <td>{{ department.id }}</td>
+              <td>{{ department.departmentName }}</td>
+              <td>{{ department.isActive}}</td>
+              <td>
+                <div class="d-flex justify-content-center">
+                  <div>
+                    <button class="btn btn-outline-primary mr-1" color="primary" (click)="action('edit',department.id)">Edit</button>
+                  </div>
+                  <div>
+                    <button class="btn btn-outline-secondary ml-1" (click)="action('view',department.id)">View</button>
+                  </div>
+                </div>
+  
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="departments?.length == 0">
+            <tr>
+              <td colspan="7" class="no-data-available text-lg-center">No Data Found!</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
     loginForm= new FormGroup({
       email:new FormControl('',[Validators.required,Validators.email]),
       password:new FormControl('',[Validators.required,]),
+      //role:new FormControl('',[Validators.required])
     })
   ngOnInit(): void {
    this.isUserLogedin();
@@ -43,13 +44,13 @@ model.username=this.loginForm.value.email;
 model.password=this.loginForm.value.password;
 
 this.service.login(model).subscribe((data)=>{
- if(data!=null && data.response!=null && data.status===HttpStatus.SUCCESS){
-   this.localStorageService.setLocalStorage('USER_NAME_SESSION_ATTRIBUTE_NAME',data.response.email)
-   this.snackbarService.openSucessSnackBar(data.message,this.backUrl)
-   location.reload();
- }else{
-   this.snackbarService.openErrorSnackBar(data.message)
- }
+  if(data!=null && data.response!=null && data?.response?.returnUrl && data.status===HttpStatus.SUCCESS){
+    this.localStorageService.setLocalStorage('USER_NAME_SESSION_ATTRIBUTE_NAME',data.response.email)
+    this.snackbarService.openSucessSnackBar(data.message,data?.response?.returnUrl)
+    this.router.navigateByUrl(data?.response?.returnUrl);
+  }else{
+    this.snackbarService.openErrorSnackBar(data.message)
+  }
 })
   }
   goToRegistrationPage(){
