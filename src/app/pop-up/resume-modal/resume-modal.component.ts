@@ -7,6 +7,10 @@ declare var require: any;
 const htmlToPdfmake = require("html-to-pdfmake");
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 import html2canvas from 'html2canvas';
+import { EmployeeResumeService } from 'src/app/main/shared/employee-resume.service';
+import { HttpStatus } from 'src/app/constant/enum';
+import { EmployeeResume } from 'src/app/main/shared/employee-resume';
+import { SnackbarService } from 'src/app/common/utility/snackbar.service';
 declare var html2pdf: any;
 
 @Component({
@@ -17,16 +21,33 @@ declare var html2pdf: any;
 export class ResumeModalComponent implements OnInit {
   @ViewChild('resumePdf',{static:false})
   resumePdf!: ElementRef;
-
+  employee !:any;
   constructor(
     private dialogRef: MatDialogRef<ResumeModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public  data: any
+    @Inject(MAT_DIALOG_DATA) public  data: any,
+    private employeeService :EmployeeResumeService,
+    private snackbar:SnackbarService,
     ) { }
 
   ngOnInit(): void {
+    this.getDetail();
   }
 
-  
+  getDate(){
+    return new Date()
+  }
+  getDetail(){
+      this.employeeService.getEmployeeById(this.data?.id).subscribe((data)=>{
+        if(data!=null && data!=undefined && data.response!=null && data.status==HttpStatus.SUCCESS){
+           this.employee=data.response;
+         
+        }else{
+          this.snackbar.openErrorSnackBar(data.message);
+        }
+      
+    })
+   }
+
 
   confirm(){
     const result={

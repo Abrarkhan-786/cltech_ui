@@ -176,7 +176,7 @@ export class GridEmployeeComponent implements OnInit ,OnDestroy{
       panelClass: 'full-screen-modal',
       enterAnimationDuration:'500ms',
       exitAnimationDuration:'300ms',
-      data: {instruction:this.instruction},
+      data: {"id":id},
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       
