@@ -25,12 +25,14 @@ import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
 import { GridEmployeeComponent } from './grid-employee/grid-employee.component';
 import { ViewEmployeeResumeComponent } from './view-employee-resume/view-employee-resume.component';
 import { EditEmployeeResumeComponent } from './edit-employee-resume/edit-employee-resume.component';
+import { ResumePreviewComponent } from './resume-preview/resume-preview.component';
 const routes: Routes = [
   { path: 'add-employee', component: EmployeeResumeComponent },
-  {path:'employees',component:EmployeeTableComponent},
+  {path:  'employees',component:EmployeeTableComponent},
   { path: '', component:GridEmployeeComponent },
   { path: 'view-employee', component:ViewEmployeeResumeComponent },
   { path: 'edit-employee', component:EditEmployeeResumeComponent },
+  { path: 'preview-resume', component:ResumePreviewComponent },
 ];
 
 
@@ -40,7 +42,8 @@ const routes: Routes = [
     EmployeeTableComponent,
     GridEmployeeComponent,
     ViewEmployeeResumeComponent,
-    EditEmployeeResumeComponent
+    EditEmployeeResumeComponent,
+    ResumePreviewComponent
   ],
   imports: [
     RouterModule.forChild(routes),

@@ -32,12 +32,16 @@
           <div>
             <button mat-raised-button color="primary" (click)="action('edit',employee.id)">Edit</button>
           </div>
-          <div>
+          <!-- <div>
             <button mat-raised-button color="accent" (click)="action('view',employee.id)">View</button>
+          </div> -->
+          <div>
+            <button mat-raised-button color="warn" (click)="action('preview-resume',employee.id)">View</button>
           </div>
           <div>
             <button mat-raised-button color="warn" (click)="action('preview',employee.id)">Preview</button>
           </div>
+          
         </div>
        
       </td>

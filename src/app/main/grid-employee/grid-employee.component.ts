@@ -163,7 +163,10 @@ export class GridEmployeeComponent implements OnInit ,OnDestroy{
       this.router.navigate(["resumeBuilder/view-employee"],{queryParams:{param:id},skipLocationChange:true})
     }else if(action=="preview"){
       this.openResumeDialogBox(id);
+    }else if(action=="preview-resume"){
+      this.router.navigate(["resumeBuilder/preview-resume"],{queryParams:{param:id},skipLocationChange:true})
     }
+
   }
 
   openResumeDialogBox(id:number){
