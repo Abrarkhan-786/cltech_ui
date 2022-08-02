@@ -8,6 +8,7 @@ import { Address, Education, EmployeeDetail, EmployeeResume, Experience, Languag
 import { EmployeeResumeService } from '../shared/employee-resume.service';
 import { Moment } from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-view-employee-resume',
@@ -25,6 +26,7 @@ export class ViewEmployeeResumeComponent implements OnInit {
   @ViewChild('myInput') inputElement!: ElementRef;
   maxDate!: Moment;
   minDate!: Moment;
+  departments:any;
   constructor(
     private fb: FormBuilder,
     private employeeService :EmployeeResumeService,
@@ -46,6 +48,12 @@ export class ViewEmployeeResumeComponent implements OnInit {
     {"code":"Beginner","value":"Beginner"},
     {"code":"Intermidiate","value":"Intermidiate"},
     {"code":"Fluent","value":"Fluent"}
+  ]
+
+  post:any=[
+    {"id": 1, "departmentName": "Java Developer"},
+    {"id": 2, "departmentName": "Angular Developer"},
+    {"id": 3, "departmentName": "Php Developer"},
   ]
 
   countrList=[
@@ -79,15 +87,34 @@ export class ViewEmployeeResumeComponent implements OnInit {
     skills:this.fb.array([this.initialSkill()]),
     cerification:['',[]],
     socialMediaLink:this.fb.array([]),
-    hobbies:['']
+    hobbies:[''],
+    post:[,Validators.required]
   },
   
   )
 
   // required to perform some operation at time of loading of application
   ngOnInit(): void {
+    this.getAllDepartments();
     this.getDetail()
   }
+  getAllDepartments(){
+    this.employeeService.getAllDepartments().subscribe((data:any)=>{
+      if(data!=null && data.response!=null && data.status==HttpStatus.SUCCESS){
+       this.departments=data.response;
+      }else{
+        this.snackbar.openErrorSnackBar(data.message)
+      }
+     })
+  }
+
+  selectedPostValue(event: MatSelectChange){
+    console.log(event.source.value);
+    this.resumeForm.patchValue({
+      'post':event.source.value
+       
+    })
+ }
 
     getDetail(){
     this.activatedRoute.queryParams.subscribe((params)=>{
@@ -95,6 +122,7 @@ export class ViewEmployeeResumeComponent implements OnInit {
       this.employeeService.getEmployeeById(id).subscribe((data)=>{
         if(data!=null && data!=undefined && data.response!=null && data.status==HttpStatus.SUCCESS){
            this.employeeDetail=data.response;
+           
           this.resumeForm.patchValue({
              'id':data.response.id,
              'carrierObjective':data.response.carrierObjective,
@@ -113,8 +141,10 @@ export class ViewEmployeeResumeComponent implements OnInit {
              'preferedLocation':data.response.preferedLocation,
              'cerification':data.response.certifications,
              'hobbies':data.response.hobbies,
+          });
+          this.resumeForm.patchValue({
+            'post':this.existingPost(data.response?.posts),
           })
-
           this.resumeForm.setControl("addreses",this.existingAddress(data.response.employeeDetail.addreses))
           this.resumeForm.setControl("experiences",this.existingExperience(data.response?.experiences))
           this.resumeForm.setControl("projects",this.existingProject(data.response?.projects))
@@ -122,13 +152,20 @@ export class ViewEmployeeResumeComponent implements OnInit {
           this.resumeForm.setControl("skills",this.existingSkill(data.response.skills))
           this.resumeForm.setControl("socialMediaLink",this.existingsocialMedailLink(data.response?.socialMediaLinks))
           this.resumeForm.setControl("educations",this.existingEducation(data.response.educations))
-
           this.resumeForm.disable();
         }else{
           this.snackbar.openErrorSnackBar(data.message);
         }
       })
     })
+   }
+
+    existingPost(postSet:any):any{
+      if(postSet!=null && postSet.length>0){
+        let posts=postSet.map((post:any)=>post.departmentId);
+         return posts;
+      }
+     
    }
 
    existingAddress(addressSet:any):FormArray{
@@ -200,7 +237,7 @@ export class ViewEmployeeResumeComponent implements OnInit {
         formArray.push(
           this.fb.group({
             'gitHub':socialMediaLinkSet?.gitHub,
-            'linkdin':socialMediaLinkSet?.linkdin,
+            'linkdin':socialMediaLinkSet?.linkedIn,
             'stackOverflow':socialMediaLinkSet?.stackOverflow,
            })
           )
@@ -528,7 +565,7 @@ export class ViewEmployeeResumeComponent implements OnInit {
       this.resumeForm.get('alternatePhone')?.updateValueAndValidity();
     }
   }
-
+ 
   backToGrid(){
     this.router.navigate([this.dataTableUrl]);
   }

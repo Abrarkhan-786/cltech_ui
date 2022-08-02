@@ -16,7 +16,7 @@ export class EmployeeResume{
  currentCTC:number |null |undefined;
  expectedCTC!:number |null |undefined;
  preferedLocation!:string |null |undefined; 
- posts:Array<Post>=[]
+ posts:Array<any>=[]
     constructor(){}
 }
 

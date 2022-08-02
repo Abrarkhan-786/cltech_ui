@@ -72,20 +72,20 @@
                     </div>
                    
                 </div>
-                <div class="col col-lg-5 offset-md-1 mt-2">
+                <div class="col col-lg-5 offset-md-1 mt-2" *ngIf="employee?.socialMediaLinks">
                     <h4 style="margin:0; padding:0 ;color:rgb(113, 113, 192)" class="socialMedialink ">Social Media Link</h4>
                    <div>
                      <div >
                         <p style="margin:0; padding:0 ;line-height: normal;"  id="socialMedia1">Github</p>
-                        <p style="margin:0; padding:0 ;">{{(employee?.socialMediaLinks?.gitHub)?employee.socialMediaLinks.gitHub:+"------------------"}}</p>
+                        <p style="margin:0; padding:0 ;">{{(employee?.socialMediaLinks?.gitHub)?employee.socialMediaLinks.gitHub:"------------------"}}</p>
                     </div>
                     <div class="mt-1">
                         <p style="margin:0; padding:0 ;line-height: normal;"id="socialMedia2">LinkdIn</p>
-                        <p style="margin:0; padding:0 ;">{{(employee?.socialMediaLinks?.linkedIn)?employee.socialMediaLinks.linkedIn:+"------------------"}}</p>
+                        <p style="margin:0; padding:0 ;">{{(employee?.socialMediaLinks?.linkedIn)?employee.socialMediaLinks.linkedIn:"------------------"}}</p>
                     </div>
                     <div class="mt-1">
                         <p style="margin:0; padding:0 ;line-height: normal;" id="socialMedia3">stackoverflow</p>
-                        <p style="margin:0; padding:0 ;">{{(employee?.socialMediaLinks?.stackOverflow)?employee.socialMediaLinks.stackOverflow:+"------------------"}}</p>
+                        <p style="margin:0; padding:0 ;">{{(employee?.socialMediaLinks?.stackOverflow)?employee.socialMediaLinks.stackOverflow:"------------------"}}</p>
                     </div>
                    </div>
                 </div>

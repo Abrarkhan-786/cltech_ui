@@ -511,19 +511,22 @@ export class EmployeeResumeComponent implements OnInit {
       employee.educations.push(education);
      });
 
-     let projectArray:any=(this.resumeForm.value.projects && this.resumeForm.value.projects.length>0)?
+     //projects
+     let projectArray:any=(this.resumeForm.value.projects && this.resumeForm.value.projects.length>0 )?
      this.resumeForm.value.projects:null;
+     if(projectArray!=null && projectArray.length>0){
      let project =new Project();
      projectArray.forEach((element:any)=>{
       project.projectName=element.projectName;
       project.projectDescription=element.projectDescription;
       employee.projects.push(project);
-     })
-     
-
-
+     });
+    }
+    
+   //experiene
      let experiencArray:any=(this.resumeForm.value.experiences && this.resumeForm.value.experiences.length>0)?
      this.resumeForm.value.experiences:null;
+     if(experiencArray!=null && experiencArray.length>0 ){
      let experience=new Experience()
      experiencArray.forEach((element:any) => {
       experience.jobTitle=element.jobTitle;
@@ -535,7 +538,8 @@ export class EmployeeResumeComponent implements OnInit {
       employee.experiences.push(experience);
 
      });
-    console.log(employee)
+    }
+   // console.log(employee)
 
      this.employeeService.saveEmployeeResume(employee).subscribe((data)=>{
       if(data!=null && data.response!=null && data.status==HttpStatus.SUCCESS){
