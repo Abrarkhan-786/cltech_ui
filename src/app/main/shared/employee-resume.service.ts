@@ -16,6 +16,11 @@ export class EmployeeResumeService {
     return this.http.post(url,employeeResume)
   }
 
+  public updateEmployeeResume(employeeResume:EmployeeResume):Observable<any> {
+    const url = this.backenedUrl + 'employee/updateEmployee';
+    return this.http.post(url,employeeResume)
+  }
+
    public getEmployeeById(id:number):Observable<any> {
     const url = this.backenedUrl + 'employee/getEmployeeById/'+id;
     return this.http.get(url)
@@ -26,4 +31,8 @@ export class EmployeeResumeService {
     return this.http.get(url)
   }
 
+  public updateEmployeeResumeStatus(employeeResume:EmployeeResume):Observable<any> {
+    const url = this.backenedUrl + 'employee/updateEmployeeResumeStatus';
+    return this.http.post(url,employeeResume)
+  }
 }

@@ -36,6 +36,7 @@ export class DepartmentComponent implements OnInit {
       title: 'ID',
       data: 'id',
       name: 'id',
+      
     },
      
 
@@ -43,18 +44,21 @@ export class DepartmentComponent implements OnInit {
         title: 'Department',
          data: 'departmentName' ,
          name: 'departmentName',
+         
         },
         {
           title: 'Active',
-           data: 'isActive' ,
-           name: 'isActive',
+           data: 'active' ,
+           name: 'active',
+           
           },
         
     
      { 
       title: 'Action',
       data:"Action",searchable:false,orderable: false,
-      class:"action"
+      class:"action",
+      
     }
      
     ];
@@ -67,6 +71,10 @@ export class DepartmentComponent implements OnInit {
     ) {}
   
   ngOnInit(): void {
+    this.loadTable();
+  }
+
+  loadTable(){
     const that = this;
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -79,8 +87,9 @@ export class DepartmentComponent implements OnInit {
       jQueryUI: true,
       displayStart:0,
       lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-       //scrollY:"350px",
-      // scrollX:true,
+      scrollCollapse: true,
+      scrollY:"350px",
+       scrollX:true,
       order: [[0, 'desc']],
       language: {
         searchPlaceholder: "Search Here"
@@ -106,14 +115,12 @@ export class DepartmentComponent implements OnInit {
       },
       columns: this.displayedColumn,
     };
+  
   }
 
   backToRecruiters(){
     this.router.navigate([this.backUrl])
   }
- 
-  
-
 action(action:string,id:any){
    let dialogRef:any;
     if(action=="edit"){

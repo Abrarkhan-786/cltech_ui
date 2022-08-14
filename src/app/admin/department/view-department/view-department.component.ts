@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,7 +13,8 @@ import { User } from '../../user';
 @Component({
   selector: 'app-view-department',
   templateUrl: './view-department.component.html',
-  styleUrls: ['./view-department.component.css']
+  styleUrls: ['./view-department.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ViewDepartmentComponent implements OnInit {
   backUrl='/admin/department';
@@ -53,7 +54,7 @@ export class ViewDepartmentComponent implements OnInit {
        this.departmentForm.patchValue({
         "id":data.response.id,
         "departmentName":data.response.departmentName,
-        "isActive":data.response.isActive,
+        "isActive":data.response.active,
        });
        this.departmentForm.disable();
       }else{

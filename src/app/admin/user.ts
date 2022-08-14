@@ -7,7 +7,9 @@ export class User{
  roleId!:number | null |undefined;
  deparmentIds:number|null|undefined;
  departments:string|null|undefined;
- isActive!: boolean | null | undefined;
+ firstName:string|null|undefined;
+ lastName:string|null|undefined;
+ active!: boolean | null | undefined;
  //departments: Array<Department> = [];
  constructor(){}
 }
@@ -15,7 +17,7 @@ export class User{
 export class Department{
     id!: number | null |undefined;
     departmentName!: string |null|undefined;
-    isActive!: boolean | null | undefined;
+    active!: boolean | null | undefined;
     constructor(){}
 }
 

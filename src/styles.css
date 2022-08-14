@@ -1,8 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css"; 
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wght@8..144,300&family=Roboto+Slab:wght@200&display=swap');
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: 'Roboto Slab', serif;
+    
+}
 
 .green-snackbar {
     background: rgb(9, 190, 76);
@@ -31,15 +34,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     text-align: center!important;
   }
 
+  .icon{
+    cursor: pointer;
+  }
+  
+  
+
   /* table.dataTable tbody th,
   table.dataTable tbody td {
     white-space: nowrap;
 } */
 
-::ng-deep{
+/* ::ng-deep{
     @media print {
         body {
           -webkit-print-color-adjust: exact;
          }
       }
-}
+} */
+

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,7 +14,8 @@ import { Department, User } from '../../user';
 @Component({
   selector: 'app-add-department',
   templateUrl: './add-department.component.html',
-  styleUrls: ['./add-department.component.css']
+  styleUrls: ['./add-department.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AddDepartmentComponent implements OnInit {
 backUrl='/admin/department';
@@ -52,6 +53,7 @@ action="add";
 
     let model =new Department();
     model.departmentName=this.departmentForm.value.departmentName;
+    model.active=this.departmentForm.value.isActive;
     this.service.saveDepartment(model).subscribe((data)=>{
       if(data!=null && data.response!=null && data.status===HttpStatus.SUCCESS){
         this.snackbarService.openSucessSnackBar(data.message,this.backUrl)

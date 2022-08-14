@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router, TitleStrategy } from '@angular/router';
@@ -14,7 +14,8 @@ import { User } from '../../user';
 @Component({
   selector: 'app-edit-user-department',
   templateUrl: './edit-user-department.component.html',
-  styleUrls: ['./edit-user-department.component.css']
+  styleUrls: ['./edit-user-department.component.css'],
+  encapsulation: ViewEncapsulation.None 
 })
 export class EditUserDepartmentComponent implements OnInit {
 backUrl='/admin';
@@ -63,7 +64,7 @@ departments:any;
     model.email=this.userForm.value.email;
     const idsArray:any=this.userForm.value.departments;
     model.deparmentIds=idsArray.join();
-    model.isActive=this.userForm.value.isActive;
+    model.active=this.userForm.value.isActive;
    // console.log(model)
     this.service.updateUserDepartment(model).subscribe((data)=>{
       if(data!=null && data.response!=null && data.status===HttpStatus.SUCCESS){
@@ -92,7 +93,7 @@ departments:any;
        this.userForm.patchValue({
         "id":data.response.id,
         "email":data.response.email,
-        "isActive":data.response.isActive,
+        "isActive":data.response.active,
         "departments":numArary
        });
        

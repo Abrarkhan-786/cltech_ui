@@ -13,7 +13,9 @@ import { environment } from 'src/environments/environment';
 import { HttpStatus } from 'src/app/constant/enum';
 import { ResumeModalComponent } from 'src/app/pop-up/resume-modal/resume-modal.component';
 import { EditUserDepartmentComponent } from './edit-user-department/edit-user-department.component';
-import { NavItem } from '../navigation/data';
+import { AuthticationService } from 'src/app/authentication/authentication.service';
+import { AddRecruiterComponent } from './add-recruiter/add-recruiter.component';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -26,10 +28,12 @@ export class UserComponent implements OnInit {
   datatableElement!: DataTableDirective;
   instruction:string='Do you want delete record?'
   confirmation:any;
+  removeHedear:boolean=false;
+  removeFooter:boolean=false;
    departments = new FormControl('');
   extraParam={"extraParam":4};
+  title="Recruiter"
   users:any;
-  menu=NavItem;
    displayedColumn:any=[
 
      { 
@@ -62,6 +66,7 @@ export class UserComponent implements OnInit {
     private http: HttpClient,
     private router:Router,
     public dialog: MatDialog,
+    private autService:AuthticationService
     ) {}
   
   ngOnInit(): void {
@@ -77,7 +82,8 @@ export class UserComponent implements OnInit {
       jQueryUI: true,
       displayStart:0,
       lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-       //scrollY:"350px",
+      scrollCollapse: true,
+      // scrollY:"200px",
       // scrollX:true,
       order: [[0, 'desc']],
       language: {
@@ -116,12 +122,21 @@ export class UserComponent implements OnInit {
     // if(action=="edit"){
     //  this.router.navigate(["admin/edit-user-department"],{ queryParams: { param: id },skipLocationChange:true})
     // }
-    this.dialog.open(EditUserDepartmentComponent, {
-     width: '500px',
-     disableClose:true,
-      data: {'id': id},
-    });
+    if(action=="edit"){
+      this.dialog.open(EditUserDepartmentComponent, {
+        // width: '500px',
+        disableClose:true,
+         data: {'id': id},
+       });
+     
+      }else if(action=="add"){
+       this.dialog.open(AddRecruiterComponent, {
+      
+      disableClose:true,
+       data: {'id': id,'title':"Add Recruiter"},
+     });
+   
   }
-
   
+ }
 }   

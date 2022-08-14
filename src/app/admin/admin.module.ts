@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
 import { UserComponent } from './user/user.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -25,26 +24,33 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {MatExpansionModule} from '@angular/material/expansion';
-import { DepartmentComponent } from './department/department.component';
 import { ViewDepartmentComponent } from './department/view-department/view-department.component';
 import { EditDepartmentComponent } from './department/edit-department/edit-department.component';
 import { AddDepartmentComponent } from './department/add-department/add-department.component';
-
-
-const routes: Routes = [
-  { path: '', component:UserComponent },
-  { path: 'edit-user-department', component:EditUserDepartmentComponent },
-  { path: 'department', component:DepartmentComponent },
-  { path: 'department/edit-department', component:EditDepartmentComponent },
-  { path: 'department/view-department', component:ViewDepartmentComponent },
-  { path: 'department/add-department', component:AddDepartmentComponent },
-];
-
-
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { SideNavbarComponent } from './side-navbar/side-navbar.component';
+import { MatCardModule } from '@angular/material/card';
+import { AdminComponent } from './admin.component';
+import { AdminRoutingModule } from './admin-routing.module';
+import { FooterModule } from '../component/footer/footer.module';
+import { NgHttpLoaderModule } from 'ng-http-loader'; 
+import {MatMenuModule} from '@angular/material/menu';
+import { AddRecruiterComponent } from './user/add-recruiter/add-recruiter.component';
+import { SharedModule } from '../common/shared/shared.module';
 @NgModule({
-  declarations: [UserComponent,EditUserDepartmentComponent,AddDepartmentComponent,EditDepartmentComponent,ViewDepartmentComponent],
+  declarations: [
+    UserComponent,
+    EditUserDepartmentComponent,
+    AddDepartmentComponent,
+    EditDepartmentComponent,
+    ViewDepartmentComponent,
+    AdminComponent,
+    SideNavbarComponent,
+    AddRecruiterComponent,
+    
+  ],
   imports: [
-    RouterModule.forChild(routes),
+    AdminRoutingModule,
     CommonModule,
     MatInputModule,
     MatSlideToggleModule,
@@ -68,7 +74,13 @@ const routes: Routes = [
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatToolbarModule,
+    MatCardModule,
+    FooterModule,
+    NgHttpLoaderModule.forRoot(),
+    MatMenuModule,
+    SharedModule
   ]
 })
 export class AdminModule { }

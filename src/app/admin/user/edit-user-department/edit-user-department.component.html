@@ -1,24 +1,22 @@
-<div class="container-fluid">
-    <div>
-        <div  class="">
-            
-            <div class="heading-div" >
-                <div class="cross" mat-dialog-close>
-                    <i class="fa-solid fa-xmark"></i>
-                </div>
-                <h2 >{{title}}</h2>
-            </div>
+<div class="wrapper">
+    <div class="heading-div" >
+        <h2 class="m-0">{{title}}</h2>
+        <button mat-icon-button  mat-dialog-close >
+            <mat-icon class="">close</mat-icon>
+        </button>
+    </div>
+        <div  class="container-fluid">
            <div class="form-div">
             <form [formGroup]="userForm" (submit)="editUserDepartment()">
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 col-sm-11">
                         <mat-form-field appearance="outline" floatLabel="always" >
                             <mat-label>ID</mat-label>
                             <input [readonly]="true" matInput placeholder="Id" name="id" formControlName="id" >
                             <mat-error></mat-error>
                         </mat-form-field>
                       </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 col-sm-11">
                         <mat-form-field appearance="outline" floatLabel="always" >
                             <mat-label>Email</mat-label>
                             <input [readonly]="true" matInput placeholder="Email" name="email" formControlName="email">
@@ -33,11 +31,11 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 col-sm-11">
                         <mat-form-field appearance="outline" fxFlex="90" floatLabel="always" class="example-full-width">
                             <mat-label>Department</mat-label>
                             <mat-select formControlName="departments" placeholder="Departments" name="departments" multiple>
-                                <mat-option *ngFor="let department of departments" [value]="department?.id">{{department?.departmentName}}</mat-option>
+                                <mat-option *ngFor="let department of departments" [value]="department?.departmentId">{{department?.departmentName}}</mat-option>
                               </mat-select>
                             <mat-error *ngIf="userForm.get('departments')?.hasError('required')">
                                 It is required
@@ -65,4 +63,3 @@
         </div>
 
     </div>
-</div>

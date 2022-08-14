@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,7 +14,8 @@ import { Department, User } from '../../user';
 @Component({
   selector: 'app-edit-department',
   templateUrl: './edit-department.component.html',
-  styleUrls: ['./edit-department.component.css']
+  styleUrls: ['./edit-department.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class EditDepartmentComponent implements OnInit {
   backUrl='/admin/department';
@@ -55,7 +56,7 @@ export class EditDepartmentComponent implements OnInit {
     let model =new Department();
     model.id=Number(this.departmentForm.value.id);
     model.departmentName=this.departmentForm.value.departmentName;
-    model.isActive=this.departmentForm.value.isActive;
+    model.active=this.departmentForm.value.isActive;
     console.log(model)
     this.service.updateDepartment(model).subscribe((data)=>{
       if(data!=null && data.response!=null && data.status===HttpStatus.SUCCESS){
@@ -76,7 +77,7 @@ export class EditDepartmentComponent implements OnInit {
        this.departmentForm.patchValue({
         "id":data.response.id,
         "departmentName":data.response.departmentName,
-        "isActive":data.response.isActive,
+        "isActive":data.response.active,
        });
       }else{
         this.snackbarService.openErrorSnackBar(data.message)

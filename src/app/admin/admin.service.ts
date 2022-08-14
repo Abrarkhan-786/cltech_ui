@@ -1,15 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { DepartmentComponent } from './department/department.component';
 import { Department, User } from './user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
-  backenedUrl = environment.BACKEND_URL;
+   backenedUrl = environment.BACKEND_URL;
+   //braodCastId:Subject<number>=new Subject<number>()
   constructor(private http:HttpClient) { }
 
   public updateUserDepartment(user:User):Observable<any> {
@@ -42,6 +42,22 @@ export class AdminService {
     return this.http.get(url)
   }
   
+  public registration(model:User):Observable<any> {
+    const url = this.backenedUrl + 'authentication/registration';
+    return this.http.post(url,model);
+  }
 
+  public updateProfile(model:User):Observable<any> {
+    const url = this.backenedUrl + 'authentication/updateProfile';
+    return this.http.post(url,model);
+  }
+  public resetPassword(model:User):Observable<any> {
+    const url = this.backenedUrl + 'authentication/resetPassword';
+    return this.http.post(url,model);
+  }
 
+  public getDashBoardData():Observable<any> {
+    const url = this.backenedUrl + 'authentication/getDashBoardData';
+    return this.http.post(url,{});
+  }
 }

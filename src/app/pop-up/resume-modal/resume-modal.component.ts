@@ -22,6 +22,7 @@ export class ResumeModalComponent implements OnInit {
   @ViewChild('resumePdf',{static:false})
   resumePdf!: ElementRef;
   employee !:any;
+  hideEmployeeDetail:boolean=false;
   constructor(
     private dialogRef: MatDialogRef<ResumeModalComponent>,
     @Inject(MAT_DIALOG_DATA) public  data: any,
@@ -98,6 +99,14 @@ downloadAsPdf(){
   };
   // New Promise-based usage:
    html2pdf().from(resumePdf).set(opt).save(); 
+}
+
+hideContactDetail(hideDetail:boolean){
+  if(hideDetail){
+    this.hideEmployeeDetail=hideDetail;
+  }else{
+    this.hideEmployeeDetail=hideDetail;
+  }
 }
 
 }

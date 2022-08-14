@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './component/header/header.component';
-import { FooterComponent } from './component/footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
@@ -32,20 +30,26 @@ import { DataTablesModule } from 'angular-datatables';
 import { ResumeModalModule } from './pop-up/resume-modal/resume-modal.module';
 import { MatCardModule } from '@angular/material/card';
 import { DepartmentComponent } from './admin/department/department.component';
-
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatListModule} from '@angular/material/list';
+import { FooterModule } from './component/footer/footer.module';
+import { NgHttpLoaderModule } from 'ng-http-loader';
+import { SharedModule } from './common/shared/shared.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent,
     RefreshComponent,
     RegistrationComponent,
     LoginComponent,
     DepartmentComponent,
     
-    
   ],
   imports: [
+    
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -70,9 +74,20 @@ import { DepartmentComponent } from './admin/department/department.component';
     jqxGridModule,
     DataTablesModule,
     ResumeModalModule,
-    MatCardModule
+    MatCardModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatExpansionModule,
+    MatListModule,
+    FooterModule,
+    SharedModule,
+    FlexLayoutModule ,
+    NgHttpLoaderModule.forRoot(), 
+    
+    
   ],
   providers: [DatePipe],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports:[]
 })
 export class AppModule { }

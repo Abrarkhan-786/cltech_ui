@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { AuthticationService } from '../authentication/authentication.service';
 import { UserModel } from '../authentication/userModel';
 import { LocalStorageService } from '../common/utility/localStorage.service';
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
   backUrl='/resumeBuilder';
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
   isLoggedin:boolean=false;
+  showPassword:boolean=false;
   constructor(
     private router:Router,
     private service:AuthticationService,
@@ -32,6 +34,9 @@ export class LoginComponent implements OnInit {
    this.isUserLogedin();
    
   }
+  toggleVisibilityOfPassword(){
+    this.showPassword=!this.showPassword;
+  }
    
   signIn(){
     if(!this.loginForm.valid){
@@ -46,6 +51,9 @@ model.password=this.loginForm.value.password;
 this.service.login(model).subscribe((data)=>{
   if(data!=null && data.response!=null && data?.response?.returnUrl && data.status===HttpStatus.SUCCESS){
     this.localStorageService.setLocalStorage('USER_NAME_SESSION_ATTRIBUTE_NAME',data.response.email)
+    if(data?.response?.returnUrl==environment.ADMIN_URL){
+      this.service.sendHeaderVisibilityStatus(true);
+    }
     this.snackbarService.openSucessSnackBar(data.message,data?.response?.returnUrl)
     this.router.navigateByUrl(data?.response?.returnUrl);
   }else{

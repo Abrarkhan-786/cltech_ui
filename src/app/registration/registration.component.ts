@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../admin/user';
@@ -12,13 +12,16 @@ import { HttpStatus } from '../constant/enum';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  styleUrls: ['./registration.component.css'],
+  encapsulation: ViewEncapsulation.None 
 })
 export class RegistrationComponent implements OnInit {
 backUrl='/resumeBuilder';
 USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
 isLoggedin:boolean=false;
 roles:any;
+showPassword:boolean=false;
+showConfirmPassword:boolean=false;
   constructor(
     private router: Router,
     private service:AuthticationService,
@@ -30,11 +33,22 @@ roles:any;
   }
 
   ngOnInit(): void {
-  this.getRole();
+    this.isUserLogedin();
+    this.getRole();
+  }
+
+  isUserLogedin(){
+    // this.isLoggedin=this.service.isUserLoggedIn();
+     if(this.localStorageService.getLocalStorage("USER_NAME_SESSION_ATTRIBUTE_NAME")!==undefined && this.localStorageService.getLocalStorage("USER_NAME_SESSION_ATTRIBUTE_NAME")!=null){
+          this.router.navigate(['/resumeBuilder'])
+      }else{
+       return;
+      }
   }
 
   registrationForm= new FormGroup({
-   // name:new FormControl('',[Validators.required]),
+    firstName:new FormControl('',[Validators.required,Validators.minLength(3)]),
+    lastName:new FormControl('',[Validators.required,Validators.minLength(3)]),
     email:new FormControl('',[Validators.required,Validators.email]),
     password:new FormControl('',[Validators.required,Validators.minLength(8)]),
     confirmPassword:new FormControl('',[Validators.required,]),
@@ -63,7 +77,12 @@ roles:any;
 
   }
   
-
+  toggleVisibilityOfPassword(){
+    this.showPassword=!this.showPassword;
+  }
+  toggleVisibilityOfConfirmPassword(){
+    this.showConfirmPassword=!this.showConfirmPassword;
+  }
   goToLoginPage(){
     this.router.navigate(['/login']);
   }
@@ -77,7 +96,10 @@ roles:any;
     model.email=this.registrationForm.value.email;
     model.password=this.registrationForm.value.password;
     model.confirmPassword=this.registrationForm.value.confirmPassword;
+    model.firstName=this.registrationForm.value.firstName;
+    model.lastName=this.registrationForm.value.lastName;
     model.roleId=Number(this.registrationForm.value.role);
+    model.active=true;
     console.log(model)
 
     this.service.registration(model).subscribe((data)=>{

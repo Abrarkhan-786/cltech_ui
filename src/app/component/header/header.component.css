@@ -1,6 +1,14 @@
 .menu-link {
     font-size: 1.1rem;
-    font-family: 'sans-serif';
     font-weight: 500;
     text-transform: capitalize;
+}
+.header{
+    position:relative;
+     top:0px;
+     left:0px; 
+     right:0px;
+     /* z-index: 99; */
+     width: 100%;
+     font-family: 'Roboto Slab', serif;
 }

@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UntypedFormArray } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../admin/user';
 import { LocalStorageService } from '../common/utility/localStorage.service';
@@ -15,12 +15,15 @@ import { UserModel } from './userModel';
 export class AuthticationService {
   backenedUrl = environment.BACKEND_URL;
   user:any=null;
+   private Subject=new BehaviorSubject<boolean>(false);
   constructor(
     private http:HttpClient,
     private localStorageService:LocalStorageService,
     private router : Router
     
-    ) { }
+    ) {
+      
+     }
    
     headers={
       "Content-Type": "application/json",
@@ -64,5 +67,20 @@ export class AuthticationService {
   public getRole():Observable<any> {
      const url = this.backenedUrl + 'authentication/getRole';
     return this.http.post(url,{})
+  }
+
+  recieveHeaderVisibilityStatus():Observable<boolean>{
+    return this.Subject.asObservable();
+
+  }
+
+  sendHeaderVisibilityStatus(showHeader:boolean){
+     this.Subject.next(showHeader);
+
+  }
+
+  public findSessionUser(email:string):Observable<any> {
+     const url = this.backenedUrl + 'authentication/findByUsername?email='+email;
+    return this.http.get(url)
   }
 }
