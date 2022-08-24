@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, NgZone } from '@angular/core';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';

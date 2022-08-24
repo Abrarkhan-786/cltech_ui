@@ -717,14 +717,14 @@ export class EditEmployeeResumeComponent implements OnInit {
 
     console.log(employee)
 
-    //  this.employeeService.saveEmployeeResume(employee).subscribe((data)=>{
-    //   if(data!=null && data.response!=null && data.status==HttpStatus.SUCCESS){
-    //     this.snackbar.openSucessSnackBar(data.message,this.dataTableUrl);
-    //     //this.resumeForm.reset();
-    //   }else{
-    //     this.snackbar.openErrorSnackBar(data.message);
-    //   }
-    //  })
+     this.employeeService.updateEmployeeResume(employee).subscribe((data)=>{
+      if(data!=null && data.response!=null && data.status==HttpStatus.SUCCESS){
+        this.snackbar.openSucessSnackBar(data.message,this.dataTableUrl);
+        //this.resumeForm.reset();
+      }else{
+        this.snackbar.openErrorSnackBar(data.message);
+      }
+     })
 
   } 
   

@@ -21,6 +21,7 @@ declare var html2pdf: any;
 export class ResumeModalComponent implements OnInit {
   @ViewChild('resumePdf',{static:false})
   resumePdf!: ElementRef;
+  fileName="resume";
   employee !:any;
   hideEmployeeDetail:boolean=false;
   constructor(
@@ -41,6 +42,12 @@ export class ResumeModalComponent implements OnInit {
       this.employeeService.getEmployeeById(this.data?.id).subscribe((data)=>{
         if(data!=null && data!=undefined && data.response!=null && data.status==HttpStatus.SUCCESS){
            this.employee=data.response;
+           let time=this.getDate().getTime();
+           this.fileName=data.response.employeeDetail.firstName;
+           data.response?.posts.forEach((post:any)=>{
+            this.fileName +="-"+ post.departmentName.split(' ')[0]
+           })
+           this.fileName+="-"+time;
          
         }else{
           this.snackbar.openErrorSnackBar(data.message);
@@ -87,18 +94,37 @@ print(){
     pdfMake.createPdf(documentDefinition).print(); 
 }
 
-downloadAsPdf(){
-  const doc = new jsPDF("portrait","mm","A5");
-  const resumePdf = $("#resumePdf").html;
-  var opt = {
-    margin:       1,
-    filename:     'output.pdf',
-    image:        { type: 'jpeg', quality: 0.98 },
-    html2canvas:  { scale: 2 },
-    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-  };
-  // New Promise-based usage:
-   html2pdf().from(resumePdf).set(opt).save(); 
+
+
+openPDF(): void {
+  let DATA: any = document.getElementById('resumePdf');
+  html2canvas(DATA).then((canvas) => {
+    let fileWidth = 208;
+    let fileHeight = (canvas.height * fileWidth) / canvas.width;
+    const FILEURI = canvas.toDataURL('image/png');
+    let PDF = new jsPDF('p', 'mm', 'a4');
+    let position = 0;
+    PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+    PDF.save(this.fileName+'.pdf');
+  });
+}
+
+downloadAsDocx() {
+  var header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' " +
+    "xmlns:w='urn:schemas-microsoft-com:office:word' " +
+    "xmlns='http://www.w3.org/TR/REC-html40'>" +
+    "<head><meta charset='utf-8'></head><body>";
+  var footer = "</body></html>";
+  const resumePdf = document.getElementById("resumePdf")?.innerHTML;
+  var sourceHTML = header + resumePdf + footer;
+
+  var source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+  var fileDownload = document.createElement("a");
+  document.body.appendChild(fileDownload);
+  fileDownload.href = source;
+  fileDownload.download = this.fileName+'.doc';
+  fileDownload.click();
+  document.body.removeChild(fileDownload);
 }
 
 hideContactDetail(hideDetail:boolean){
