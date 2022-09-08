@@ -26,13 +26,21 @@ import { GridEmployeeComponent } from './grid-employee/grid-employee.component';
 import { ViewEmployeeResumeComponent } from './view-employee-resume/view-employee-resume.component';
 import { EditEmployeeResumeComponent } from './edit-employee-resume/edit-employee-resume.component';
 import { ResumePreviewComponent } from './resume-preview/resume-preview.component';
+import { EmployeeListComponent } from './employee-list/employee-list.component';
+import {MatIconModule} from '@angular/material/icon';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
+
 const routes: Routes = [
+  { path: '', component:GridEmployeeComponent },
   { path: 'add-employee', component: EmployeeResumeComponent },
   {path:  'employees',component:EmployeeTableComponent},
-  { path: '', component:GridEmployeeComponent },
+  { path: 'preview-resume', component:ResumePreviewComponent },
   { path: 'view-employee', component:ViewEmployeeResumeComponent },
   { path: 'edit-employee', component:EditEmployeeResumeComponent },
   { path: 'preview-resume', component:ResumePreviewComponent },
+  { path: 'detail', component:EmployeeListComponent },
+  
 ];
 
 
@@ -43,7 +51,9 @@ const routes: Routes = [
     GridEmployeeComponent,
     ViewEmployeeResumeComponent,
     EditEmployeeResumeComponent,
-    ResumePreviewComponent
+    ResumePreviewComponent,
+    EmployeeListComponent,
+    
   ],
   imports: [
     RouterModule.forChild(routes),
@@ -67,7 +77,9 @@ const routes: Routes = [
     MatCheckboxModule,
     MomentDateModule,
     DataTablesModule,
-    jqxGridModule
+    jqxGridModule,
+    MatIconModule,
+    FlexLayoutModule
   ]
 })
 export class EmployeeResumeModule { }

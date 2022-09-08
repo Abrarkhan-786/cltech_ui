@@ -14,20 +14,7 @@ table {
     width: 100%;
   }
   .heading{
-    display: inline-block;
-    background: blueviolet; 
-    padding:10px;
-    color:white;
-    box-shadow: 2px ,2px, 5px grey;
-    border-radius: 4px;
-    text-align: center;
-    margin-top:1rem;
-    justify-content: center;
-    position:relative;
-    left: 43%;
-    right: 50%;
-
-   
+   color:#1f1f1f;
 }
 
 input[type=file]{
@@ -54,7 +41,7 @@ table.dataTable tbody td {
 
   
   .wrapper{
-    height: 80vh;
+    height: 79.2vh;
     width:100%;
     display: flex;
     justify-content: center;

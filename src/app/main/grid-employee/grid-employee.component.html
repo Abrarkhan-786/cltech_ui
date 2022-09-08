@@ -1,6 +1,7 @@
 <div class="wrapper" >
   <div class="card w-75 ">
     <div class="card-body bg-white shadow rounded table-responsive w-100 ">
+      <h1 class="heading">{{title}} ({{employees?.length }})</h1>
       <table datatable [dtOptions]="dtOptions" class="table table-bordered table-striped table-hover ">
         <thead>
           <!-- <tr>
@@ -29,7 +30,7 @@
             <td>
               <div class="d-flex justify-content-around">
                 <div>
-                  <button mat-raised-button color="primary" (click)="action('edit',employee.id)">Edit</button>
+                  <button mat-raised-button color="primary" (click)="action('view',employee.id)">View</button>
                 </div>
                 <!-- <div>
             <button mat-raised-button color="accent" (click)="action('view',employee.id)">View</button>

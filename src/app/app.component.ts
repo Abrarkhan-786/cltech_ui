@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, NgZone } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { fromEvent, Subject } from 'rxjs';
    
 export const MY_DATE_FORMATS = {
     parse: {
@@ -24,9 +25,14 @@ export const MY_DATE_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ]
 })
-export class AppComponent {
+export class AppComponent  implements OnInit,OnDestroy{
+ 
+  
+private unsubscriber : Subject<void> = new Subject<void>();
+
   title = 'cltech_ui';
   showHead: boolean = false;
+  subscription: any;
   // constructor(private router: Router) {
   //   // on route change to '/login', set the variable showHead to false
   //     router.events.forEach((event) => {
@@ -50,5 +56,18 @@ export class AppComponent {
         }
       }
     });
+  }
+  ngOnInit(): void {
+    history.pushState(null, "", location.href);
+
+   this.subscription = fromEvent(window, 'popstate').subscribe(_ => {
+      history.pushState(null, "", location.href);
+    
+   });
+
+  }
+  
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

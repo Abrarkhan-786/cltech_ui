@@ -38,7 +38,15 @@ body { margin: 0; font-family: 'Roboto Slab', serif;
     cursor: pointer;
   }
   
-  
+  body {
+    background-image: url("assets/image/background-body.jpg");
+    background-color: #cccccc;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    position: relative;
+   
+  }
 
   /* table.dataTable tbody th,
   table.dataTable tbody td {

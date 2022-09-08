@@ -38,6 +38,12 @@ import { FooterModule } from './component/footer/footer.module';
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { SharedModule } from './common/shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatMenuModule} from '@angular/material/menu';
+import { ProfilesModule } from './pop-up/update-profile/profile.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,8 +88,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FooterModule,
     SharedModule,
     FlexLayoutModule ,
+    MatMenuModule,
     NgHttpLoaderModule.forRoot(), 
-    
+    ProfilesModule,
+    MatProgressSpinnerModule,
+    BackButtonDisableModule.forRoot()
     
   ],
   providers: [DatePipe],

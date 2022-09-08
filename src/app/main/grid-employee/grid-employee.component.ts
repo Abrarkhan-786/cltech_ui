@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { HttpStatus } from 'src/app/constant/enum';
 import { ResumeModalComponent } from 'src/app/pop-up/resume-modal/resume-modal.component';
 import { LocalStorageService } from 'src/app/common/utility/localStorage.service';
+import { RefreshPageService } from 'src/app/common/utility/refreshPage.service ';
 @Component({
   selector: 'app-grid-employee',
   templateUrl: './grid-employee.component.html',
@@ -20,11 +21,12 @@ import { LocalStorageService } from 'src/app/common/utility/localStorage.service
 })
 export class GridEmployeeComponent implements OnInit ,OnDestroy{
 
+ 
   backenedUrl = environment.BACKEND_URL;
   dtOptions: DataTables.Settings = {};
   @ViewChild(DataTableDirective, { static: false })
   datatableElement!: DataTableDirective;
-  instruction:string='Do you want delete record?'
+  title="Applicant"
   confirmation:any;
   extraParam={"extraParam":this.localStorageService.getLocalStorage('USER_NAME_SESSION_ATTRIBUTE_NAME')};
   employees:any;
@@ -91,8 +93,11 @@ export class GridEmployeeComponent implements OnInit ,OnDestroy{
     private http: HttpClient,
     private router:Router,
     public dialog: MatDialog,
-    private localStorageService:LocalStorageService
-    ) {}
+    private localStorageService:LocalStorageService,
+    private refreshpageService:RefreshPageService
+    ) {
+      
+    }
   
   dtTrigger: Subject<any> = new Subject<any>();
   ngOnInit(): void {

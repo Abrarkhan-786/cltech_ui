@@ -24,6 +24,7 @@
     "@angular/router": "^14.0.0",
     "@types/file-saver": "^2.0.5",
     "angular-datatables": "^14.0.0",
+    "angular-disable-browser-back-button": "^1.0.2",
     "datatables.net": "^1.12.1",
     "datatables.net-bs5": "^1.11.3",
     "datatables.net-buttons": "^2.2.3",

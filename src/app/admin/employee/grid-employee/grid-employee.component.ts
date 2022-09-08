@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs';
@@ -96,7 +96,8 @@ export class GridEmployeeComponent implements OnInit{
     private groupMasterService:GroupMasterService,
     private refreshPage:RefreshPageService,
     private employeeResumeService:EmployeeResumeService,
-    private snackbar:SnackbarService
+    private snackbar:SnackbarService,
+    private route: ActivatedRoute,
     ) {}
   
   dtTrigger: Subject<any> = new Subject<any>();
@@ -157,8 +158,9 @@ export class GridEmployeeComponent implements OnInit{
       this.openResumeDialogBox(id);
     }else if(action=="add"){
       this.router.navigate(["/admin/applicant/add-applicant"])
+    }else if(action=="bulkUpload"){
+      this.router.navigate(["excel-upload"],{ relativeTo: this.route })
     }
-
   }
 
   openResumeDialogBox(id:number){
@@ -215,6 +217,5 @@ export class GridEmployeeComponent implements OnInit{
   }
    
 
-
-
+ 
 }   

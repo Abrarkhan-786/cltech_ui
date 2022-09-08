@@ -16,11 +16,11 @@ import { MatSelectChange } from '@angular/material/select';
 })
 export class EmployeeResumeComponent implements OnInit {
 
-  title="Employee Form"
+  title="Applicant Form"
   hidden:boolean=false;
   hiddenCurrentCtc:boolean=true;
   hideEndDate:any;
-  dataTableUrl:any="/resumeBuilder";
+  dataTableUrl:any="/resumeBuilder/detail";
   departments:any;
   @ViewChild('myInput') inputElement!: ElementRef;
   maxDate!: Moment;

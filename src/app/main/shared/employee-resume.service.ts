@@ -35,4 +35,14 @@ export class EmployeeResumeService {
     const url = this.backenedUrl + 'employee/updateEmployeeResumeStatus';
     return this.http.post(url,employeeResume)
   }
+
+  public getApplicant(employeeResume:EmployeeResume):Observable<any> {
+    const url = this.backenedUrl + 'employee/getApplicant';
+    return this.http.post(url,employeeResume)
+  }
+
+  public bulkUpload(formData:FormData):Observable<any> {
+    const url = this.backenedUrl + 'employee/excelUpload';
+    return this.http.post(url,formData);
+  }
 }

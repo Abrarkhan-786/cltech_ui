@@ -48,6 +48,7 @@ import { SharedModule } from '../common/shared/shared.module';
     SideNavbarComponent,
     AddRecruiterComponent,
     
+    
   ],
   imports: [
     AdminRoutingModule,

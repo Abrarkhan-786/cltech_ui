@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { AuthticationService } from '../authentication/authentication.service';
 import { UserModel } from '../authentication/userModel';
 import { LocalStorageService } from '../common/utility/localStorage.service';
+import { RefreshPageService } from '../common/utility/refreshPage.service ';
 import { SnackbarService } from '../common/utility/snackbar.service';
 import { HttpStatus } from '../constant/enum';
 
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
     private router:Router,
     private service:AuthticationService,
     private snackbarService:SnackbarService,
-    private localStorageService:LocalStorageService
+    private localStorageService:LocalStorageService,
+    private refreshpageService:RefreshPageService
     ) { }
     
     loginForm= new FormGroup({
@@ -53,9 +55,15 @@ this.service.login(model).subscribe((data)=>{
     this.localStorageService.setLocalStorage('USER_NAME_SESSION_ATTRIBUTE_NAME',data.response.email)
     if(data?.response?.returnUrl==environment.ADMIN_URL){
       this.service.sendHeaderVisibilityStatus(true);
+      
+      
     }
+    
     this.snackbarService.openSucessSnackBar(data.message,data?.response?.returnUrl)
     this.router.navigateByUrl(data?.response?.returnUrl);
+   
+    // this.snackbarService.openSucessSnackBar(data.message,'/resumeBuilder/detail')
+    // this.router.navigateByUrl('/resumeBuilder/detail');
   }else{
     this.snackbarService.openErrorSnackBar(data.message)
   }
